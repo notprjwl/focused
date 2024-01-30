@@ -1,13 +1,14 @@
 require("dotenv").config();
 
 const express = require("express");
+const mongoose = require("mongoose");
+const workoutRoutes = require("./routes/workouts");
 
 // express app
 const app = express();
-const workoutRoutes = require('./routes/workouts');
 
 // middleware
-app.use(express.json())   //This is particularly useful for handling POST or PUT requests where the client sends JSON data in the request body. The express.json() middleware ensures that you can easily access and work with that JSON data in your route handlers ie workoutRoutes
+app.use(express.json()); //This is particularly useful for handling POST or PUT requests where the client sends JSON data in the request body. The express.json() middleware ensures that you can easily access and work with that JSON data in your route handlers ie workoutRoutes
 app.use((req, res, next) => {
   //app.use -> expressjs method used to mount middleware func in the req, res cycle. It specifies that the middleware function provided should be executed for every incoming request.
   console.log(req.path, req.method);
@@ -15,9 +16,17 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.use('/api/workouts', workoutRoutes)
+app.use("/api/workouts", workoutRoutes);
 
-// listen for requests
-app.listen(process.env.PORT, () => {
-  console.log("listening on port", process.env.PORT);
-});
+// connect to db
+mongoose.connect(process.env.MONG_URI)
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log("connected to the db and listening on port", process.env.PORT);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+
