@@ -5,9 +5,12 @@ module.exports = {
     extend: {
       fontFamily: {
         honk: ["Honk"],
-        poppins:["Poppins"],
+        inter: ["Inter"],
         crete:["Crete Round"],
-        dm:["dm mono"]
+      },
+      colors: {
+        background: "#f2f6fe",
+        text: "#0f0f10",
       },
     },
   },
