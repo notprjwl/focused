@@ -6,11 +6,14 @@ module.exports = {
       fontFamily: {
         honk: ["Honk"],
         inter: ["Inter"],
-        crete:["Crete Round"],
+        crete: ["Crete Round"],
+        oswald: ["Oswald"],
+        jost: ["Jost"]
       },
       colors: {
-        background: "#f2f6fe",
+        background: "#ffffff",
         text: "#0f0f10",
+        body: "#ffd3a4"
       },
     },
   },
