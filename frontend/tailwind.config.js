@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        poppins:["Poppins"],
         honk: ["Honk"],
         inter: ["Inter"],
         crete: ["Crete Round"],
