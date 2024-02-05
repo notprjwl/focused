@@ -3,8 +3,8 @@ import React from "react";
 const WorkoutDetails = ({ workout }) => {
   const newCreatedAt = workout.createdAt.slice(0, 10)
   return (
-    <div className='text-back font-poppins pb-4'>
-      <h4 className='font-bold'>{workout.title}</h4>
+    <div className='text-back font-poppins p-6 shadow-lg mb-9 w-[250px] rounded-lg justify-start mr-auto'>
+      <h4 className='font-bold text-red mb-3'>{workout.title}</h4>
       <p>
         <strong>Weight(kg): </strong>
         {workout.weight}
