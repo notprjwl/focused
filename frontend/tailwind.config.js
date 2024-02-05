@@ -12,9 +12,11 @@ module.exports = {
         jost: ["Jost"]
       },
       colors: {
+        transparent: 'transparent',
         background: "#ffffff",
         text: "#0f0f10",
-        body: "#ffd3a4"
+        body: "#ffd3a4",
+        red: '#d56272',
       },
     },
   },
