@@ -1,14 +1,15 @@
 import React from "react";
 import useFetch from "../hooks/useFetch";
 import WorkoutDetails from "../components/WorkoutDetails";
+import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
   const { workouts, loading, error } = useFetch("/api/workouts");
 
   return (
-    <div className='container bg-body mx-auto h-[80vh] justify-between rounded-3xl border-none shadow-lg'>
-      <div className='text-text p-5 font-oswald'>
-        {workouts && workouts.map((workout) => <WorkoutDetails key={workout._id} workout={workout} />)}
+    <div className=''>
+      <div className='text-text p-5 max-w-[1400px] items-center justify-between mx-auto flex'>
+        <div className=''>{workouts && workouts.map((workout) => <WorkoutDetails key={workout._id} workout={workout} />)}</div>
         {loading && (
           <div className='text-center'>
             <svg aria-hidden='true' className='inline w-8 h-[70vh] mt-5 text-background animate-spin fill-text' viewBox='0 0 100 101' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -18,6 +19,17 @@ const Home = () => {
           </div>
         )}
         {error && <div className='text-center text-text text-wrap bg-background font-mono mt-10 p-5 rounded-md'>{error}</div>}
+        <div className='max-w-[1400px] justify-between items-right mx-auto '>
+          {/* <button type='button' className='text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500 float-right'>
+            <svg className='w-4 h-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 18 18'>
+              <path d='M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z' />
+            </svg>
+            <span className='sr-only'>Icon description</span>
+          </button> */}
+        </div>
+        <div className='mx-auto align-top mb-[800px]'>
+          <WorkoutForm />
+        </div>
       </div>
     </div>
   );
