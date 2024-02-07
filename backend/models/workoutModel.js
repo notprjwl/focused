@@ -13,6 +13,10 @@ const workoutSchema = new Schema(
       type: Number,
       required: true,
     },
+    sets: {
+      type: Number,
+      required: true,
+    },
     reps: {
       type: Number,
       required: true,
