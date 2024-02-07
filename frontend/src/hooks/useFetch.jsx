@@ -1,10 +1,12 @@
 import React from "react";
-import {useState, useEffect} from "react"
+import { useState, useEffect } from "react";
+import { useWorkoutsContext } from "./useWorkoutsContext";
 
 const useFetch = (url) => {
-  const [workouts, setWorkouts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  const { workouts, dispatch } = useWorkoutsContext();
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -13,15 +15,14 @@ const useFetch = (url) => {
         if (!resp.ok) {
           throw Error("error: cannot fetch the data");
         }
-        const respData = await resp.json();
+        const json = await resp.json();
         setTimeout(() => {
-          setWorkouts(respData);
+          dispatch({ type: "SET_WORKOUTS", payload: json });
           setLoading(false);
           setError(null);
         }, 1000);
       } catch (error) {
         setLoading(false);
-        setWorkouts(null);
         setError(error.message);
       }
     };
