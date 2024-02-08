@@ -14,6 +14,11 @@ const workoutsReducer = (state, action) => {
         workouts: [action.payload, ...state.workouts], //updating the state by creating a new array that includes the action.payload (new workout) followed by the existing workouts in the state (...state.workouts).
       };
 
+    case "DELETE_WORKOUT":
+      return {
+        workouts: state.workouts.filter((w) => w._id !== action.payload._id), // here we are filter if the workout id is equal to the deleted id that i.e payload which is json then don't display. if it is not equal then display.
+      };
+
     default:
       return state; // return the current state unchanged
   }
