@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        roboto: ["Roboto"],
         poppins:["Poppins"],
         honk: ["Honk"],
         inter: ["Inter"],
@@ -17,6 +18,7 @@ module.exports = {
         text: "#0f0f10",
         body: "#ffd3a4",
         red: '#d56272',
+        error: '#dd0612',
       },
     },
   },
