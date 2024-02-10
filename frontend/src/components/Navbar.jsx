@@ -14,7 +14,6 @@ const Navbar = () => {
             <h1 className='text-2xl pl-2 font-bold italic tracking-tight'>Workout.</h1>
           </Link>
         </div>
-        <div className=''></div>
 
         <div className='flex text-center font-bold items-center tracking-tight'>
           {/* <Link className='pr-5'>
