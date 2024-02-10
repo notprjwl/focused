@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+import UpdateModal from "./UpdateModal";
 
 const WorkoutDetails = ({ workout }) => {
   const newCreatedAt = workout.createdAt.slice(0, 10);
   const { dispatch } = useWorkoutsContext();
 
-  const handleClick = async () => {
+  const [modal, setModal] = useState(false);
+
+  const handleDelete = async () => {
     const response = await fetch("api/workouts/" + workout._id, {
       method: "DELETE",
     });
@@ -13,6 +16,14 @@ const WorkoutDetails = ({ workout }) => {
     if (response.ok) {
       dispatch({ type: "DELETE_WORKOUT", payload: json });
     }
+  };
+
+  const ismodalOpen = () => {
+    console.log("modal is open");
+    setModal(true);
+  };
+  const isModalClose = () => {
+    setModal(false);
   };
 
   return (
@@ -35,13 +46,27 @@ const WorkoutDetails = ({ workout }) => {
         {newCreatedAt}
       </p>
       <span className='flex justify-end'>
-        <button className='absolute mt-[-130px] bg-[#F8F4F9] font-poppins shadow-md text-red p-2 rounded-md text-sm font-bold hover:bg-red hover:text-[#F8F4F9]'>Update</button>
+        <button className='absolute mt-[-130px] bg-[#F8F4F9] font-poppins shadow-md text-red p-2 rounded-md text-sm font-bold hover:bg-red hover:text-[#F8F4F9]' onClick={ismodalOpen}>
+          Update
+        </button>
       </span>
       <span className='flex justify-end'>
-        <button className='absolute mt-[-40px] bg-[#F8F4F9] font-poppins shadow-md text-red p-2 rounded-md text-sm font-bold hover:bg-red hover:text-[#F8F4F9]' onClick={handleClick}>
+        <button className='absolute mt-[-40px] bg-[#F8F4F9] font-poppins shadow-md text-red p-2 rounded-md text-sm font-bold hover:bg-red hover:text-[#F8F4F9]' onClick={handleDelete}>
           Delete
         </button>
       </span>
+      {modal && (
+        <UpdateModal
+          closeModal={isModalClose}
+          initialValues={{
+            title: workout.title,
+            weight: workout.weight,
+            sets: workout.sets,
+            reps: workout.reps,
+            id: workout._id
+          }}
+        />
+      )}
     </div>
   );
 };
