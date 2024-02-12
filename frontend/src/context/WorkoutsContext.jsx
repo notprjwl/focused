@@ -16,6 +16,8 @@ const workoutsReducer = (state, action) => {
       };
 
     case "UPDATE_WORKOUT":
+      // console.log("Updating workout. Payload:", action.payload);
+      // console.log("Current state:", state.workouts);
       return {
         workouts: state.workouts.map((w) => (w._id === action.payload._id ? action.payload : w)),
       };

@@ -63,7 +63,7 @@ const WorkoutDetails = ({ workout }) => {
             weight: workout.weight,
             sets: workout.sets,
             reps: workout.reps,
-            id: workout._id
+            _id: workout._id
           }}
         />
       )}
