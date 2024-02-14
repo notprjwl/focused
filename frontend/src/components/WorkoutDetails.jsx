@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import UpdateModal from "./UpdateModal";
 
@@ -7,6 +7,15 @@ const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutsContext();
 
   const [modal, setModal] = useState(false);
+  const [transition, setTransition] = useState(false);
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      setTransition(true);
+    }, 100);
+    return () => clearTimeout(timeOut);
+  }, [setTransition]);
+
 
   const handleDelete = async () => {
     const response = await fetch("api/workouts/" + workout._id, {
@@ -27,7 +36,7 @@ const WorkoutDetails = ({ workout }) => {
   };
 
   return (
-    <div className='text-back font-poppins p-6 shadow-lg mb-9 max-w-[1400px] rounded-lg'>
+    <div className='text-back font-poppins p-6 shadow-lg mb-9 max-w-[1400px] rounded-lg '>
       <h4 className='font-bold text-red mb-3'>{workout.title}</h4>
       <p>
         <strong>Weight(kg): </strong>
@@ -46,7 +55,7 @@ const WorkoutDetails = ({ workout }) => {
         {newCreatedAt}
       </p>
       <span className='flex justify-end'>
-        <button className='absolute mt-[-130px] bg-[#F8F4F9] font-poppins shadow-md text-red p-2 rounded-md text-sm font-bold hover:bg-red hover:text-[#F8F4F9]' onClick={ismodalOpen}>
+        <button className='absolute mt-[-130px] bg-[#F8F4F9] font-poppins shadow-md text-red p-2 rounded-md text-sm font-bold hover:bg-red hover:text-[#F8F4F9] transition-all duration-500 ease-in-out' onClick={ismodalOpen}>
           Update
         </button>
       </span>

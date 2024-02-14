@@ -16,10 +16,9 @@ const Home = () => {
       <div class='w-80 relative mx-auto mt-20 '>
         <div className="">
           <h1 className='text-white font-playfair text-4xl group blur-[1px] hover:blur-0 transition-all duration-500 ease-in-out'>
-            Are you focu<span className='opacity-80 blur-[1px] group-hover:blur-none group-hover:opacity-100 transition-all duration-500 ease-in-out italic'>sed,</span> <h1 className='opacity-0 absolute mx-auto left-0 right-0 group-hover:opacity-100 transition-all duration-500 ease-in-out blur-[1px] group-hover:blur-none'>Prajwal?</h1>
+            Are you focu<span className='opacity-80 blur-[1px] group-hover:blur-none group-hover:opacity-100 transition-all duration-500 ease-in-out italic'>sed,</span> <h1 className='opacity-0 absolute mx-auto left-0 right-0 group-hover:opacity-100 transition-all duration-500 ease-in-out blur-[1px] group-hover:blur-none group-hover: font-semibold text-md'>Prajwal?</h1>
           </h1>
         </div>
-
         <img src='/home-illustration.png' alt='Home Illustration' className='w-full h-full object-cover' />
         <div class='absolute bottom-0 left-0 right-0 h-10 gradient'></div>
       </div>

@@ -37,7 +37,7 @@ const SignUp = () => {
             <input type='text' className='text-white text-sm  bg-formBg border border-border rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus' />
           </div>
           <div className='p-2 pt-5'>
-            <button type='submit' className='text-white text-sm font-semibold  bg-borderFocus border border-border rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus hover:bg-green-800 transition-all duration-500 ease-in-out'>
+            <button type='submit' className='text-white text-sm font-semibold  bg-borderFocus border border-none rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus hover:bg-green-800 transition-all duration-500 ease-in-out'>
               CONTINUE
             </button>
           </div>

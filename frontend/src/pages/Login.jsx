@@ -11,7 +11,7 @@ const Login = () => {
     return () => clearTimeout(timeOut);
   });
   return (
-    <div className={`flex justify-center h-[90vh] items-center transition-all duration-1000 ease-in-out transform ${transition ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
+    <div className={`flex justify-center h-[90ch] items-center transition-all duration-1000 ease-in-out transform ${transition ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
       <div className='bg-formBg p-5 mx-auto w-[23rem] h-[50%] shadow-xl rounded-xl'>
         <div className='font-sans text-white text-center mb-7'>
           <h1 className='font-sans font-bold text-[20px]'>Login to your account</h1>
@@ -31,7 +31,7 @@ const Login = () => {
             <input type='password' className='text-white text-sm  bg-formBg border border-border rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus' />
           </div>
           <div className='p-2 pt-5'>
-            <button type='submit' className='text-white text-sm font-semibold bg-borderFocus border border-border rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus hover:bg-green-800 transition-all duration-500 ease-in-out'>
+            <button type='submit' className='text-white text-sm font-semibold bg-borderFocus border border-none rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus hover:bg-green-800 transition-all duration-500 ease-in-out'>
               CONTINUE
             </button>
           </div>

@@ -1,10 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
 import useFetch from "../hooks/useFetch";
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
 
 const Main = () => {
   const { workouts, loading, error } = useFetch("/api/workouts");
+
+  const [modal, setModal] = useState(false);
+
+  const modalOpen = () => {
+    console.log("modal is open");
+    setModal(true);
+  };
+  const modalClose = () => {
+    setModal(false);
+  };
 
   return (
     <div className=''>
@@ -18,9 +28,10 @@ const Main = () => {
       )}
       {!loading && (
         <div className='grid place-items-center'>
-          <WorkoutForm />
+          <button className="btn btm-sm bg-formBg text-gray-300" onClick={modalOpen}>Add an Exercise</button>
         </div>
       )}
+      {modal && (<WorkoutForm closeModal={modalClose}/>)}
       <div className='text-text p-5 max-w-[1200px] items-center justify-between mx-auto'>
         <div className=''>{workouts && workouts.map((workout) => <WorkoutDetails key={workout._id} workout={workout} />)}</div>
 

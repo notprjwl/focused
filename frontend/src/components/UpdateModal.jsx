@@ -46,7 +46,7 @@ const UpdateModal = ({ closeModal, initialValues }) => {
 
     return (
         <div className='fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center'>
-            <div className='bg-white p-8 rounded-lg'>
+            <div className='bg-white p-8 rounded-lg '>
                 <h2 className='text-2xl font-bold mb-4'>Update Workout</h2>
                 <form onSubmit={handleSubmit}>
                     <label className='block mb-2'>

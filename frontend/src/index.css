@@ -13,6 +13,23 @@
 body {
   margin: 0;
   background-color: #202020;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+background: #2c2c2c; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #ffffe3; 
 }
 
 input.error {
