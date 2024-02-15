@@ -35,7 +35,8 @@ module.exports = {
         buttonColor: "#B9BAA3",
         formBg: "#19191a",
         border: "#3e3e3f",
-        borderFocus: "#3a645d86"
+        borderFocus: "#3a645d86",
+        textTint: "#dfe0df",
       }
       // backgroundImage: {
       //   "home-illustration": "url('/src/assets/home-illustration.png')",
