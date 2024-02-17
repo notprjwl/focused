@@ -59,3 +59,21 @@ input.error {
     opacity: 1;
   }
 }
+
+
+@keyframes swipeIn {
+  from {
+    transform: translateX(-10%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.swipe-in {
+  animation: swipeIn 0.5s ease-in-out;
+}
+
+
