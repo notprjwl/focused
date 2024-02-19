@@ -24,7 +24,7 @@ const workoutsReducer = (state, action) => {
 
     case "DELETE_WORKOUT":
       return {
-        workouts: state.workouts.filter((w) => w._id !== action.payload._id), // here we are filtering if the workout id is equal to the deleted id that i.e payload which is json then don't display. if it is not equal then display.
+        workouts: state.workouts.filter((w) => w._id !== action.payload), // here we are filtering if the workout id is equal to the deleted id that i.e payload which is json then don't display. if it is not equal then display.
       };
 
     default:
