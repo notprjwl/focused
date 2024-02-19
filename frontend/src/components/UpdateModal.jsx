@@ -19,6 +19,7 @@ const UpdateModal = ({ closeModal, initialValues }) => {
             sets: updatedSets,
             reps: updatedReps,
         };
+        console.log(initialValues._id)
         console.log('updatedWorkout:', updatedWorkout)
         const response = await fetch("api/workouts/" + initialValues._id, {
             method: "PATCH",
