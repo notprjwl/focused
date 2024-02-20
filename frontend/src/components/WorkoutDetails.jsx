@@ -13,35 +13,96 @@ const WorkoutDetails = () => {
   const [workout, setWorkout] = useState(initialWorkout);
   const [modal, setModal] = useState(false);
   const [transition, setTransition] = useState(false);
-  const [sortOrder, setSortOrder] = useState("desc"); // Initial sort order
+  const [sortOrder, setSortOrder] = useState({}); // Initial sort order
+  //for checkbox, selecting, updating, deleting
   const [selectedWorkouts, setSelectedWorkouts] = useState([]);
   const [deleteButtonEnabled, setDeleteButtonEnabled] = useState(false);
   const [updateButtonEnabled, setUpdateButtonEnabled] = useState(false);
   const [showFilter, setShowFilter] = useState(true);
   const [showUpdateDeleteButtons, setShowUpdateDeleteButtons] = useState(false);
   const [workoutToUpdate, setWorkoutToUpdate] = useState(null);
+  //for search function
   const [searchQuery, setSearchQuery] = useState("");
+  //for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   useEffect(() => {
     // Initial rendering, no sorting
     setWorkout(initialWorkout);
   }, [initialWorkout]);
 
-  const handleSortToggle = () => {
-    // Toggle the sort order when the <th> is clicked
-    setSortOrder((prevSortOrder) => (prevSortOrder === "asc" ? "desc" : "asc"));
+  // const handleSortToggle = () => {
+  //   // Toggle the sort order when the <th> is clicked
+  //   // setSortOrder((prevSortOrder) => (prevSortOrder === "asc" ? "desc" : "asc"));
+  //   setSortOrder((prevSortOrder)=> (prevSortOrder === "asc" ? "desc" : "asc"))
+  // };
+
+  const handleSortToggle = (columnName) => {
+    setSortOrder((prevSortOrder) => {
+      const newSortOrder = { ...prevSortOrder };
+      newSortOrder[columnName] = newSortOrder[columnName] === "asc" ? "desc" : "asc";
+      return newSortOrder;
+    });
   };
+
+  // useEffect(() => {
+  //   const sortedWorkout = [...workout].sort((a, b) => {
+  //     if (sortOrder === "asc") {
+  //       return a.title.localeCompare(b.title);
+  //     } else {
+  //       return b.title.localeCompare(a.title);
+  //     }
+  //   });
+  //   setWorkout(sortedWorkout);
+  // }, [sortOrder]);
+
+  // useEffect(() => {
+  //   const sortedWorkout = [...workout].sort((a, b) => {
+  //     return Object.keys(sortOrder).reduce((acc, columnName) => {
+  //       const columnA = a[columnName] ? a[columnName].toString().toLowerCase() : "";
+  //       const columnB = b[columnName] ? b[columnName].toString().toLowerCase() : "";
+  
+  //       if (acc !== 0) return acc;
+  
+  //       if (sortOrder[columnName] === "asc") {
+  //         return columnA.localeCompare(columnB);
+  //       } else {
+  //         return columnB.localeCompare(columnA);
+  //       }
+  //     }, 0);
+  //   });
+  //   setWorkout(sortedWorkout);
+  // }, [sortOrder, workout]);
 
   useEffect(() => {
     const sortedWorkout = [...workout].sort((a, b) => {
-      if (sortOrder === "asc") {
-        return a.title.localeCompare(b.title);
-      } else {
-        return b.title.localeCompare(a.title);
-      }
+      return Object.keys(sortOrder).reduce((acc, columnName) => {
+        let columnA, columnB;
+  
+        if (columnName === 'weight' || columnName === 'sets' || columnName === 'reps') {
+          // Handle numeric columns (weight, sets, reps) differently
+          columnA = parseFloat(a[columnName]);
+          columnB = parseFloat(b[columnName]);
+        } else {
+          // Handle other columns as strings
+          columnA = a[columnName] ? a[columnName].toString().toLowerCase() : "";
+          columnB = b[columnName] ? b[columnName].toString().toLowerCase() : "";
+        }
+  
+        if (acc !== 0) return acc;
+  
+        if (sortOrder[columnName] === "asc") {
+          return columnA < columnB ? -1 : columnA > columnB ? 1 : 0;
+        } else {
+          return columnB < columnA ? -1 : columnB > columnA ? 1 : 0;
+        }
+      }, 0);
     });
     setWorkout(sortedWorkout);
-  }, [sortOrder]);
+  }, [sortOrder, workout]);
+  
+  
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -151,23 +212,40 @@ const WorkoutDetails = () => {
     }
   }, [workout]);
 
+  const handleItemsPerPageChange = (value) => {
+    setItemsPerPage(parseInt(value, 10)); //converts the value from string to an integer using base 10
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  //for pagination
+  const totalWorkouts = filteredWorkouts ? filteredWorkouts.length : 0;
+  const totalPages = Math.ceil(totalWorkouts / itemsPerPage);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentWorkouts = filteredWorkouts.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <body className='p-2'>
       <div className='text-textTint bg-background pt-2 sm:pt-5 mx-auto rounded-3xl border-[1px] border-text'>
         <div className='items-center overflow-x-auto'>
           <div className='px-10 py-4 flex justify-between items-center text-center'>
             <label className='input input-bordered flex items-center max-w-[25%] h-[40px] overflow-hidden hover:overflow-x px-3'>
-              <input type='text' className='grow sm:text-sm sm:placeholder:text-xs p-2' placeholder='Search' onChange={handleSearchChange} />
+              <input type='text' className='grow sm:text-sm sm:placeholder:text-xs' placeholder='Search' onChange={handleSearchChange} />
               <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 opacity-70'>
                 <path fillRule='evenodd' d='M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z' clipRule='evenodd' />
               </svg>
             </label>
-            {selectedWorkouts.length === 0 ? <h1 className='justify-center text-2xl sm:text-sm md:text-sm lg:text-lg font-bold xxl:mr-[10px] max-w-[25%]'>EXERCISE LOG</h1> : <h1 className='justify-center sm:text-sm md:text-sm lg:text-lg font-bold xxl:mr-[10px] w-[25%]'>{`${selectedWorkouts.length} selected`}</h1>}
+            {selectedWorkouts.length === 0 ? <h1 className='justify-center text-2xl sm:text-sm md:text-sm lg:text-lg font-bold xxl:mr-[10px] max-w-[25%] transition-all duration-200 ease-in-out'>EXERCISE LOG</h1> : <h1 className='justify-center sm:text-sm md:text-sm lg:text-lg font-bold xxl:mr-[10px] w-[25%] transition-all duration-800 ease-in-out'>{`${selectedWorkouts.length} selected`}</h1>}
             {showFilter && (
               <div className='flex justify-end min-w-[25%]'>
                 <div className='dropdown dropdown-bottom dropdown-end h-10 justify-center text-lg sm:text-xs md:text-2xl'>
-                  <div tabIndex={0} role='button' className='btn-md sm:btn-sm m-1 bg-transparent'>
-                    <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
+                  <div tabIndex={0} role='button' className='btn-sm sm:btn-sm bg-transparent transition-all duration-300 ease-in-out mt-2'>
+                    <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6 transition-all duration-300 ease-in-out'>
                       <path strokeLinecap='round' strokeLinejoin='round' d='M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z' />
                     </svg>
                   </div>
@@ -183,23 +261,23 @@ const WorkoutDetails = () => {
               </div>
             )}
             {showUpdateDeleteButtons && (
-              <div className='flex justify-end rounded-b-3xl cursor-pointer gap-5 min-w-[25%] transition-all duration-500 ease-in-out'>
+              <div className='flex justify-end rounded-b-3xl gap-5 min-w-[25%] transition-all duration-500 ease-in-out'>
                 {updateButtonEnabled && (
-                  <button onClick={handleUpdate} className='transition-all duration-500 ease-in-out'>
-                    <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6 transition-all duration-500 ease-in-out'>
+                  <button onClick={handleUpdate} className='cursor-pointer'>
+                    <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
                       <path strokeLinecap='round' strokeLinejoin='round' d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10' />
                     </svg>
                   </button>
                 )}
-                <button onClick={handleDelete} className='transition-all duration-500 ease-in-out'>
-                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6 transition-all duration-500 ease-in-out '>
+                <button onClick={handleDelete} className='cursor-pointer'>
+                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
                     <path strokeLinecap='round' strokeLinejoin='round' d='m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0' />
                   </svg>
                 </button>
               </div>
             )}
           </div>
-          <table className='table-auto mx-auto sm:w-full md:w-full lg:w-[100%] xl:w-[100%] swipe-in '>
+          <table className='table-auto mx-auto sm:w-full md:w-full lg:w-[100%] xl:w-[100%] swipe-in  '>
             <thead className='border-b-[1px] border-text'>
               <tr className='justify-start'>
                 <th>
@@ -207,27 +285,27 @@ const WorkoutDetails = () => {
                 </th>
                 <th className='px-2 py-2 sm:px-3 w-[30%] text-lg sm:text-xs md:text-2xl whitespace-nowrap text-wrap'>
                   <div className='flex items-center group text-lg sm:text-xs md:text-2xl whitespace-nowrap text-wrap'>
-                    <span onClick={handleSortToggle} className='cursor-pointer'>
+                    <span onClick={()=> handleSortToggle("title")} className='cursor-pointer'>
                       Exercise Name
                     </span>
-                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
+                    {sortOrder["title"] && (<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder["title"] === "asc" ? "rotate-0" : "rotate-180"} opacity-100 transition-all duration-500 ease-in-out inline-block`}>
                       <path fillRule='evenodd' d='M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0 1 10 17Z' clipRule='evenodd' />
-                    </svg>
+                    </svg> )}
                   </div>
                 </th>
                 <th className='px-2 py-2 sm:px-0 w-[10%] text-lg sm:text-sm md:text-2xl whitespace-nowrap text-wrap'>
                   <div className='flex items-center group'>
-                    <span onClick={() => handleSortToggle("weight")} className='cursor-pointer'>
-                      Weights
+                    <span  className='cursor-pointer' onClick={()=> handleSortToggle("weight")}>
+                      Weight
                     </span>
-                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
+                    {sortOrder["weight"] && (<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder["weight"] === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
                       <path fillRule='evenodd' d='M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0 1 10 17Z' clipRule='evenodd' />
-                    </svg>
+                    </svg>)}
                   </div>
                 </th>
                 <th className='px-2 py-2 sm:px-0 w-[10%] text-lg sm:text-sm md:text-2xl whitespace-nowrap text-wrap'>
                   <div className='flex items-center group'>
-                    <span onClick={() => handleSortToggle("sets")} className='cursor-pointer'>
+                    <span  className='cursor-pointer'>
                       Sets
                     </span>
                     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
@@ -237,7 +315,7 @@ const WorkoutDetails = () => {
                 </th>
                 <th className='px-2 py-2 sm:px-0 w-[5%] text-lg sm:text-sm md:text-2xl whitespace-nowrap text-wrap'>
                   <div className='flex items-center group'>
-                    <span onClick={() => handleSortToggle("reps")} className='cursor-pointer'>
+                    <span  className='cursor-pointer'>
                       Reps
                     </span>
                     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
@@ -248,8 +326,8 @@ const WorkoutDetails = () => {
               </tr>
             </thead>
             <tbody className={``}>
-              {filteredWorkouts && filteredWorkouts.length > 0 ? (
-                filteredWorkouts.map((workout) => (
+              {currentWorkouts && currentWorkouts.length > 0 ? (
+                currentWorkouts.map((workout) => (
                   <tr key={workout._id} className='text-left border-t-[1px] border-text swipe-in transition-all duration-500 ease-in-out'>
                     <td className='w-[1%] pl-3'>
                       <input
@@ -281,24 +359,24 @@ const WorkoutDetails = () => {
         <div className=' bg-[#393939] rounded-b-3xl px-3 p-2 sm:p-1 h-15 transition duration-500 ease-in-out'>
           <div className='flex justify-end gap-10 items-center text-lg sm:text-xs md:text-2xl'>
             <div>
-              <select name='' id='' className='btn btn-sm p-1 rounded-2xl bg-background'>
-                <option value=''>5</option>
-                <option value=''>10</option>
-                <option value=''>20</option>
-                <option value=''>25</option>
+              <select name='' id='' className='btn btn-sm p-1 rounded-2xl bg-background' value={itemsPerPage} onChange={(e) => handleItemsPerPageChange(e.target.value)}>
+                <option value='5'>5</option>
+                <option value='10'>10</option>
+                <option value='20'>20</option>
+                <option value='25'>25</option>
               </select>
             </div>
             <div>
-              <h1 className='text-white font-sans'>0-0 of 0</h1>
+              <h1 className='text-white font-sans'>{`${indexOfFirstItem + 1}-${Math.min(indexOfLastItem, totalWorkouts)} of ${totalWorkouts}`}</h1>
             </div>
             <div className='join p-1 '>
-              <button className='join-item btn btn-sm sm:btn-xs md:btn-xs lg:btn-sm rounded-2xl bg-background hover:bg-gray-400 transition duration-500 ease-in-out'>
+              <button className='join-item btn btn-sm sm:btn-xs md:btn-xs lg:btn-sm rounded-2xl bg-background transition duration-500 ease-in-out border-0 ' onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
                 <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
                   <path strokeLinecap='round' strokeLinejoin='round' d='M15.75 19.5 8.25 12l7.5-7.5' />
                 </svg>
               </button>
               {/* <button className='join-item btn-sm  bg-background '>Page 22</button> */}
-              <button className='join-item btn btn-sm sm:btn-xs md:btn-xs lg:btn-sm rounded-2xl bg-background hover:bg-gray-400 transition duration-500 ease-in-out'>
+              <button className='join-item btn btn-sm sm:btn-xs md:btn-xs lg:btn-sm rounded-2xl bg-background transition duration-500 ease-in-out border-0' onClick={()=> handlePageChange(currentPage+1)} disabled={currentPage === totalPages}>
                 <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
                   <path strokeLinecap='round' strokeLinejoin='round' d='m8.25 4.5 7.5 7.5-7.5 7.5' />
                 </svg>
