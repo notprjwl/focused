@@ -21,9 +21,9 @@ const WorkoutForm = ({ closeModal }) => {
 
   const handleClose = () => {
     setTransition(false);
-    setTimeout(()=> {
+    setTimeout(() => {
       closeModal();
-    }, 500)
+    }, 500);
   };
 
   const handleOverlayClick = (e) => {
@@ -64,14 +64,14 @@ const WorkoutForm = ({ closeModal }) => {
 
   return (
     <div onClick={handleOverlayClick} className={`fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center transition-all duration-500 ${transition ? "translate-y-0 opacity-100" : "translate-y-[-8px] opacity-0"}`}>
-      <div className={`flex justify-center h-[55vh] mt-10 items-center  transition-all duration-500 ease-in-out transform ${transition ? "translate-y-0 opacity-100" : "translate-y-[-8px] opacity-0"}`}>
-        <div className='bg-formBg p-5 mx-auto w-[23rem] h-full shadow-xl rounded-xl'>
-          <div className='flex font-sans text-white text-center mb-7 items-center justify-center'>
+      <div className={`flex justify-center h-[55vh] mt-10 items-center sm:w-[300px] transition-all duration-500 ease-in-out transform ${transition ? "translate-y-0 opacity-100" : "translate-y-[-8px] opacity-0"}`}>
+        <div className='bg-formBg p-5 mx-auto w-[23rem] shadow-xl rounded-xl transition-all duration-500 ease-in-out'>
+          <div className='flex font-sans text-white text-center mb-7 items-center justify-center transition-all duration-500 ease-in-out'>
             <h1 className='font-sans font-bold text-[20px]'>Add a new workout!</h1>
-            <div className="absolute ml-[300px] top-6">
-            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-5 h-6 cursor-pointer hover:text-[#fa4137]' onClick={handleClose}>
-              <path strokeLinecap='round' strokeLinejoin='round' d='M6 18 18 6M6 6l12 12' />
-            </svg>
+            <div className='absolute ml-[300px] top-15 sm:ml-[250px] transition-all duration-500 ease-in-out'>
+              <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-5 h-6 cursor-pointer hover:text-[#fa4137]' onClick={handleClose}>
+                <path strokeLinecap='round' strokeLinejoin='round' d='M6 18 18 6M6 6l12 12' />
+              </svg>
             </div>
           </div>
           <form onSubmit={handleSubmit} className=''>
@@ -96,36 +96,11 @@ const WorkoutForm = ({ closeModal }) => {
                 SUBMIT
               </button>
             </div>
-            <div className='flex items-center justify-center text-center mt-2'>{error && <span className='bg-error p-2 rounded-lg text-white'>{error}</span>}</div>
+            <div className='flex items-center justify-center text-center mt-2 transition-all duration-500 ease-in-out'>{error && <span className='bg-error p-2 rounded-lg text-white'>{error}</span>}</div>
           </form>
         </div>
       </div>
     </div>
-    // <div className='w-[80%] mt-4 p-5 rounded-xl max-w-[250px]'>
-    //   <form onSubmit={handleSubmit} className=' my-auto font-sans'>
-    //     <h3 className='text-center text-3xl font-honk font-medium pb-3'>Add a new workout!</h3>
-    //     <label className=''>Exercise Title:</label>
-    //     <div className='flex items-center justify-center pb-3'>
-    //       <input type='text' onChange={(e) => setTitle(e.target.value)} value={title} className='border hover:border-teal-300 border-teal-400' />
-    //     </div>
-    //     <label>Weight(in kg):</label>
-    //     <div className='flex items-center justify-center pb-3'>
-    //       <input type='number' min='0' onChange={(e) => setWeight(e.target.value)} value={weight} className='border hover:border-teal-300 border-teal-400' />
-    //     </div>
-    //     <label>Sets:</label>
-    //     <div className='flex items-center justify-center pb-3'>
-    //       <input type='number' min='0' onChange={(e) => setSets(e.target.value)} value={sets} className='border hover:border-teal-300 border-teal-400' />
-    //     </div>
-    //     <label>Reps:</label>
-    //     <div className='flex items-center justify-center'>
-    //       <input type='number' min='0'  onChange={(e) => setReps(e.target.value)} value={reps} className='border hover:border-teal-300 border-teal-400' />
-    //     </div>
-    //     <div className='text-center'>
-    //       <button className='bg-[#F8F4F9] font-poppins shadow-md text-red p-2 mt-5 rounded-md text-sm font-bold hover:bg-red hover:text-[#F8F4F9]'>Submit</button>
-    //     </div>
-    //     <div className="flex items-center justify-center text-center mt-2">{error && <span className="bg-error p-2 rounded-lg text-white">{error}</span>}</div>
-    //   </form>
-    // </div>
   );
 };
 
