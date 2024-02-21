@@ -13,7 +13,8 @@ const WorkoutDetails = () => {
   const [workout, setWorkout] = useState(initialWorkout);
   const [modal, setModal] = useState(false);
   const [transition, setTransition] = useState(false);
-  const [sortOrder, setSortOrder] = useState({}); // Initial sort order
+  const [sortOrder, setSortOrder] = useState([]); // Initial sort order
+
   //for checkbox, selecting, updating, deleting
   const [selectedWorkouts, setSelectedWorkouts] = useState([]);
   const [deleteButtonEnabled, setDeleteButtonEnabled] = useState(false);
@@ -21,12 +22,21 @@ const WorkoutDetails = () => {
   const [showFilter, setShowFilter] = useState(true);
   const [showUpdateDeleteButtons, setShowUpdateDeleteButtons] = useState(false);
   const [workoutToUpdate, setWorkoutToUpdate] = useState(null);
+
   //for search function
   const [searchQuery, setSearchQuery] = useState("");
+
   //for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
+  //for sorting the columns
+  const [titleSortOrder, setTitleSortOrder] = useState(null);
+  const [weightSortOrder, setWeightSortOrder] = useState(null);
+  const [setsSortOrder, setSetsSortOrder] = useState(null);
+  const [repsSortOrder, setRepsSortOrder] = useState(null);
+
+  //whenever we refresh the page or it loads for the first time the sorting should be initail like in the database
   useEffect(() => {
     // Initial rendering, no sorting
     setWorkout(initialWorkout);
@@ -39,9 +49,20 @@ const WorkoutDetails = () => {
   // };
 
   const handleSortToggle = (columnName) => {
+    console.log("clicked on column:", columnName);
+
     setSortOrder((prevSortOrder) => {
       const newSortOrder = { ...prevSortOrder };
+
+      // Reset sort order for other columns
+      Object.keys(newSortOrder).forEach((key) => {
+        if (key !== columnName) {
+          newSortOrder[key] = null;
+        }
+      });
+      // Toggle the sort order if it was already set, otherwise set it to "asc"
       newSortOrder[columnName] = newSortOrder[columnName] === "asc" ? "desc" : "asc";
+
       return newSortOrder;
     });
   };
@@ -62,9 +83,9 @@ const WorkoutDetails = () => {
   //     return Object.keys(sortOrder).reduce((acc, columnName) => {
   //       const columnA = a[columnName] ? a[columnName].toString().toLowerCase() : "";
   //       const columnB = b[columnName] ? b[columnName].toString().toLowerCase() : "";
-  
+
   //       if (acc !== 0) return acc;
-  
+
   //       if (sortOrder[columnName] === "asc") {
   //         return columnA.localeCompare(columnB);
   //       } else {
@@ -76,33 +97,49 @@ const WorkoutDetails = () => {
   // }, [sortOrder, workout]);
 
   useEffect(() => {
-    const sortedWorkout = [...workout].sort((a, b) => {
-      return Object.keys(sortOrder).reduce((acc, columnName) => {
+    const prevSortOrder = { ...sortOrder };
+    const sortedWorkout = [...initialWorkout].sort((a, b) => {
+      let comparison = 0;
+
+      Object.keys(sortOrder).some((columnName) => {
         let columnA, columnB;
-  
-        if (columnName === 'weight' || columnName === 'sets' || columnName === 'reps') {
-          // Handle numeric columns (weight, sets, reps) differently
+
+        if (columnName === "weight" || columnName === "sets" || columnName === "reps") {
           columnA = parseFloat(a[columnName]);
           columnB = parseFloat(b[columnName]);
+        } else if (columnName === "title") {
+          // Handle numeric values in 'Exercise Name' column
+          columnA = a[columnName];
+          columnB = b[columnName];
+          const numericA = parseFloat(columnA);
+          const numericB = parseFloat(columnB);
+
+          if (!isNaN(numericA) && !isNaN(numericB)) {
+            columnA = numericA;
+            columnB = numericB;
+          }
         } else {
-          // Handle other columns as strings
           columnA = a[columnName] ? a[columnName].toString().toLowerCase() : "";
           columnB = b[columnName] ? b[columnName].toString().toLowerCase() : "";
         }
-  
-        if (acc !== 0) return acc;
-  
-        if (sortOrder[columnName] === "asc") {
-          return columnA < columnB ? -1 : columnA > columnB ? 1 : 0;
-        } else {
-          return columnB < columnA ? -1 : columnB > columnA ? 1 : 0;
+
+        if (columnA < columnB) {
+          comparison = -1;
+        } else if (columnA > columnB) {
+          comparison = 1;
         }
-      }, 0);
+
+        if (sortOrder[columnName] === "desc") {
+          comparison *= -1;
+        }
+
+        return comparison !== 0;
+      });
+
+      return comparison;
     });
     setWorkout(sortedWorkout);
-  }, [sortOrder, workout]);
-  
-  
+  }, [sortOrder, initialWorkout]);
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -285,42 +322,42 @@ const WorkoutDetails = () => {
                 </th>
                 <th className='px-2 py-2 sm:px-3 w-[30%] text-lg sm:text-xs md:text-2xl whitespace-nowrap text-wrap'>
                   <div className='flex items-center group text-lg sm:text-xs md:text-2xl whitespace-nowrap text-wrap'>
-                    <span onClick={()=> handleSortToggle("title")} className='cursor-pointer'>
+                    <span onClick={() => handleSortToggle("title")} className='cursor-pointer'>
                       Exercise Name
                     </span>
-                    {sortOrder["title"] && (<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder["title"] === "asc" ? "rotate-0" : "rotate-180"} opacity-100 transition-all duration-500 ease-in-out inline-block`}>
-                      <path fillRule='evenodd' d='M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0 1 10 17Z' clipRule='evenodd' />
-                    </svg> )}
+                    {sortOrder["title"] && (
+                      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder["title"] === "asc" ? "rotate-0" : "rotate-180"} opacity-100 transition-all duration-500 ease-in-out inline-block`}>
+                        <path fillRule='evenodd' d='M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0 1 10 17Z' clipRule='evenodd' />
+                      </svg>
+                    )}
                   </div>
                 </th>
                 <th className='px-2 py-2 sm:px-0 w-[10%] text-lg sm:text-sm md:text-2xl whitespace-nowrap text-wrap'>
                   <div className='flex items-center group'>
-                    <span  className='cursor-pointer' onClick={()=> handleSortToggle("weight")}>
+                    <span className='cursor-pointer' onClick={() => handleSortToggle("weight")}>
                       Weight
                     </span>
-                    {sortOrder["weight"] && (<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder["weight"] === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
+                    {sortOrder["weight"] && (
+                      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder["weight"] === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
+                        <path fillRule='evenodd' d='M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0 1 10 17Z' clipRule='evenodd' />
+                      </svg>
+                    )}
+                  </div>
+                </th>
+                <th className='px-2 py-2 sm:px-0 w-[10%] text-lg sm:text-sm md:text-2xl whitespace-nowrap text-wrap'>
+                  <div className='flex items-center group' onClick={() => handleSortToggle("sets")}>
+                    <span className='cursor-pointer'>Sets</span>
+                    {sortOrder["sets"] && (<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder["sets"] === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
                       <path fillRule='evenodd' d='M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0 1 10 17Z' clipRule='evenodd' />
                     </svg>)}
                   </div>
                 </th>
-                <th className='px-2 py-2 sm:px-0 w-[10%] text-lg sm:text-sm md:text-2xl whitespace-nowrap text-wrap'>
-                  <div className='flex items-center group'>
-                    <span  className='cursor-pointer'>
-                      Sets
-                    </span>
-                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
-                      <path fillRule='evenodd' d='M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0 1 10 17Z' clipRule='evenodd' />
-                    </svg>
-                  </div>
-                </th>
                 <th className='px-2 py-2 sm:px-0 w-[5%] text-lg sm:text-sm md:text-2xl whitespace-nowrap text-wrap'>
                   <div className='flex items-center group'>
-                    <span  className='cursor-pointer'>
-                      Reps
-                    </span>
-                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
+                    <span className='cursor-pointer' onClick={()=>handleSortToggle("reps")}>Reps</span>
+                    {sortOrder["reps"] && (<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder["reps"] === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
                       <path fillRule='evenodd' d='M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0 1 10 17Z' clipRule='evenodd' />
-                    </svg>
+                    </svg>)}
                   </div>
                 </th>
               </tr>
@@ -340,7 +377,7 @@ const WorkoutDetails = () => {
                         checked={selectedWorkouts.includes(workout._id)}
                       />
                     </td>
-                    <td className='px-2 py-2 sm:px-3 text-1xl sm:text-base md:text-lg pt-2'>{workout.title}</td>
+                    <td className='px-2 py-2 sm:px-3 text-1xl sm:text-base md:text-lg pt-2'>{workout.title.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') }</td>
                     <td className='px-2 py-2  sm:px-3 text-1xl sm:text-base md:text-lg'>{workout.weight}</td>
                     <td className='px-2 py-2  sm:px-3 text-1xl sm:text-base md:text-lg'>{workout.sets}</td>
                     <td className='px-2 py-2  sm:px-3 text-1xl sm:text-base md:text-lg'>{workout.reps}</td>
@@ -376,7 +413,7 @@ const WorkoutDetails = () => {
                 </svg>
               </button>
               {/* <button className='join-item btn-sm  bg-background '>Page 22</button> */}
-              <button className='join-item btn btn-sm sm:btn-xs md:btn-xs lg:btn-sm rounded-2xl bg-background transition duration-500 ease-in-out border-0' onClick={()=> handlePageChange(currentPage+1)} disabled={currentPage === totalPages}>
+              <button className='join-item btn btn-sm sm:btn-xs md:btn-xs lg:btn-sm rounded-2xl bg-background transition duration-500 ease-in-out border-0' onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
                 <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
                   <path strokeLinecap='round' strokeLinejoin='round' d='m8.25 4.5 7.5 7.5-7.5 7.5' />
                 </svg>
