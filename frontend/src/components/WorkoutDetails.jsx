@@ -347,17 +347,23 @@ const WorkoutDetails = () => {
                 <th className='px-2 py-2 sm:px-0 w-[10%] text-lg sm:text-sm md:text-2xl whitespace-nowrap text-wrap'>
                   <div className='flex items-center group' onClick={() => handleSortToggle("sets")}>
                     <span className='cursor-pointer'>Sets</span>
-                    {sortOrder["sets"] && (<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder["sets"] === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
-                      <path fillRule='evenodd' d='M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0 1 10 17Z' clipRule='evenodd' />
-                    </svg>)}
+                    {sortOrder["sets"] && (
+                      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder["sets"] === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
+                        <path fillRule='evenodd' d='M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0 1 10 17Z' clipRule='evenodd' />
+                      </svg>
+                    )}
                   </div>
                 </th>
                 <th className='px-2 py-2 sm:px-0 w-[5%] text-lg sm:text-sm md:text-2xl whitespace-nowrap text-wrap'>
                   <div className='flex items-center group'>
-                    <span className='cursor-pointer' onClick={()=>handleSortToggle("reps")}>Reps</span>
-                    {sortOrder["reps"] && (<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder["reps"] === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
-                      <path fillRule='evenodd' d='M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0 1 10 17Z' clipRule='evenodd' />
-                    </svg>)}
+                    <span className='cursor-pointer' onClick={() => handleSortToggle("reps")}>
+                      Reps
+                    </span>
+                    {sortOrder["reps"] && (
+                      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className={`w-8 h-6 sm:w-4 mt-1 transition-all duration-500 ease-in-out ${sortOrder["reps"] === "asc" ? "rotate-0" : "rotate-180"} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out inline-block`}>
+                        <path fillRule='evenodd' d='M10 17a.75.75 0 0 1-.75-.75V5.612L5.29 9.77a.75.75 0 0 1-1.08-1.04l5.25-5.5a.75.75 0 0 1 1.08 0l5.25 5.5a.75.75 0 1 1-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0 1 10 17Z' clipRule='evenodd' />
+                      </svg>
+                    )}
                   </div>
                 </th>
               </tr>
@@ -377,10 +383,15 @@ const WorkoutDetails = () => {
                         checked={selectedWorkouts.includes(workout._id)}
                       />
                     </td>
-                    <td className='px-2 py-2 sm:px-3 text-1xl sm:text-base md:text-lg pt-2'>{workout.title.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') }</td>
-                    <td className='px-2 py-2  sm:px-3 text-1xl sm:text-base md:text-lg'>{workout.weight}</td>
-                    <td className='px-2 py-2  sm:px-3 text-1xl sm:text-base md:text-lg'>{workout.sets}</td>
-                    <td className='px-2 py-2  sm:px-3 text-1xl sm:text-base md:text-lg'>{workout.reps}</td>
+                    <td className='px-2 py-2 sm:px-3 text-1xl sm:text-base md:text-lg pt-2'>
+                      {workout.title
+                        .split(" ")
+                        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                        .join(" ")}
+                    </td>
+                    <td className='px-2 py-2 sm:px-3 text-1xl sm:text-base md:text-lg'>{workout.weight}</td>
+                    <td className='px-2 py-2 sm:px-3 text-1xl sm:text-base md:text-lg'>{workout.sets}</td>
+                    <td className='px-2 py-2 sm:px-3 text-1xl sm:text-base md:text-lg'>{workout.reps}</td>
                   </tr>
                 ))
               ) : (
