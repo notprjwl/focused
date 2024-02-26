@@ -9,6 +9,8 @@ const userSchema = new schema({
     type: String,
     required: true,
     unique: true,
+    minlength: 3,
+    maxlength: 10,
   },
   email: {
     type: String,
@@ -47,8 +49,31 @@ userSchema.statics.signup = async function (username, email, password) {
 
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
-
   const user = await this.create({ username, email, password: hash });
+
+  return user;
+};
+
+// static login method
+userSchema.statics.login = async function (username, email, password) {
+  if ((!!email && !!username) || (!email && !username)) {
+    throw Error("Provide either username or email");
+  }
+  if(!password){
+    throw Error("Password is required")
+  }
+
+  const user = await this.findOne(email ? { email } : { username });
+
+  if (!user) {
+    throw Error("Invalid login credentials");
+  }
+
+  const match = await bcrypt.compare(password, user.password); // comparing password and hashed password
+  
+  if (!match) {
+    throw Error("Invalid Password");
+  }
 
   return user;
 };
