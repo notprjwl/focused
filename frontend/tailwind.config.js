@@ -53,6 +53,7 @@ module.exports = {
         border: "#3e3e3f",
         borderFocus: "#3a645d86",
         textTint: "#dfe0df",
+        errorField: "#aa040d",
       }
       // backgroundImage: {
       //   "home-illustration": "url('/src/assets/home-illustration.png')",
