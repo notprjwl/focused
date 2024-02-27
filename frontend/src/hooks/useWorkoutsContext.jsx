@@ -10,4 +10,4 @@ const useWorkoutsContext = () => {
   return context;
 };
 
-export { useWorkoutsContext };
+export { useWorkoutsContext }; 
