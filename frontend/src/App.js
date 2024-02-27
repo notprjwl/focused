@@ -15,8 +15,7 @@ function App() {
           <Route path='/' Component={Home} />
           <Route path='/workouts' Component={Main} />
           <Route path='/login' Component={Login} />
-          <Route path='/signup' Component={SignUp} />
-          
+          <Route path='/signup' Component={SignUp} /> 
         </Routes>
       </BrowserRouter>
     </div>
