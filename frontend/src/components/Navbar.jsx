@@ -1,9 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Main from "../pages/Main";
-
+import useLogout from "../hooks/useLogout";
 
 const Navbar = () => {
+  const { logout } = useLogout();
+
+  const handleLogout = () => {
+    logout()
+  };
+
   return (
     <header className='bg-background text-text'>
       <div className='container font-dm max-w-[1400px] mx-auto my-0 flex items-center p-3 justify-between'>
@@ -28,6 +34,9 @@ const Navbar = () => {
               <circle cx='12' cy='12' r='10' /> <line x1='12' y1='8' x2='12' y2='16' /> <line x1='8' y1='12' x2='16' y2='12' />
             </svg>
           </Link>
+          <div className='mx-5'>
+            <button onClick={handleLogout}>logout</button>
+          </div>
         </div>
       </div>
     </header>
