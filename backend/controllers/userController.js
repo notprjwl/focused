@@ -6,6 +6,10 @@ const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" }); // 3 parameters
 };
 
+const createRefreshToken = (_id) => {
+  return jwt.sign({ _id }, process.env.REFRESH, { expiresIn: "10d" });
+};
+
 // login user
 const loginUser = async (req, res) => {
   const { username, email, password } = req.body;
@@ -30,6 +34,9 @@ const loginUser = async (req, res) => {
 
     //creating a token
     const token = createToken(user._id);
+    const refreshToken = createRefreshToken(user._id);
+    res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 10 * 24 * 60 * 60 * 1000 });
+
     res.status(200).json({ email, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -60,8 +67,9 @@ const signupUser = async (req, res) => {
 
     //creating a token
     const token = createToken(user._id);
-
-    res.status(200).json({ email, token });
+    const refreshToken = createRefreshToken(user._id);
+    res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 10 * 24 * 60 * 60 * 1000 });
+    res.status(200).json({ email, token,  refreshToken });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
