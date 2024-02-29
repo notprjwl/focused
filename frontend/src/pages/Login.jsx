@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useLogin } from "../hooks/useLogin";
 
 const Login = () => {
   const [transition, setTransition] = useState(false);
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login, error, isLoading } = useLogin();
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -21,14 +23,17 @@ const Login = () => {
 
   const handleEmailSubmit = async (email) => {
     console.log("email:", usernameOrEmail);
+    await login(email, password)
   };
 
   const handleUsernameSubmit = async (username) => {
     console.log("username: ", usernameOrEmail);
+    await login(username, password)
+
   };
 
   return (
-    <body className="mx-5">
+    <body className='mx-5'>
       <div className={`flex justify-center h-[90ch] items-center transition-all duration-1000 ease-in-out transform ${transition ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
         <div className='bg-formBg p-5 mx-auto w-[23rem] h-[50%] shadow-xl rounded-xl'>
           <div className='font-sans text-white text-center mb-7'>
@@ -49,7 +54,7 @@ const Login = () => {
               <input type='password' className='text-white text-sm  bg-formBg border border-border rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus' value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
             <div className='p-2 pt-5'>
-              <button type='submit' className='text-white text-sm font-semibold bg-borderFocus border border-none rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus hover:bg-green-800 transition-all duration-500 ease-in-out'>
+              <button type='submit' disabled={isLoading} className='text-white text-sm font-semibold bg-borderFocus border border-none rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus hover:bg-green-800 transition-all duration-500 ease-in-out'>
                 CONTINUE
               </button>
             </div>
@@ -60,6 +65,7 @@ const Login = () => {
               </Link>
             </div>
           </form>
+          <div>{error && <div className='text-error mx-2 '>{error}</div>}</div>
         </div>
       </div>
     </body>
