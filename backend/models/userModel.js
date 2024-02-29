@@ -12,11 +12,11 @@ const userSchema = new schema({
     minlength: 3,
     maxlength: 10,
     validate: {
-      validator: function(value) {
+      validator: function (value) {
         // Custom validation using a regular expression
         return /^[a-zA-Z0-9]+$/.test(value);
       },
-      message: 'must only contain alphanumeric characters.',
+      message: "must only contain alphanumeric characters.",
     },
   },
   email: {
@@ -62,15 +62,20 @@ userSchema.statics.signup = async function (username, email, password) {
 };
 
 // static login method
-userSchema.statics.login = async function (username, email, password) {
-  if ((!!email && !!username) || (!email && !username)) {
-    throw Error("Provide either username or email");
+userSchema.statics.login = async function (usernameOrEmail, password) {
+  // if ((!!email && !!username) || (!email && !username)) {
+  //   throw Error("Provide either username or email");
+  // }
+  if (!usernameOrEmail) {
+    throw Error("Please provide either username or email");
   }
+
   if (!password) {
     throw Error("Password is required");
   }
 
-  const user = await this.findOne(email ? { email } : { username });
+  const isEmail = validator.isEmail(usernameOrEmail);
+  const user = await this.findOne(isEmail ? { email: usernameOrEmail } : { username: usernameOrEmail });
 
   if (!user) {
     throw Error("Invalid login credentials");
