@@ -1,6 +1,10 @@
 const express = require("express");
-const router = express.Router(); //  the express.Router() function creates a new router object. A router in Express is a way to organize routes and their handlers in a separate module.
 const { createWorkout, getWorkouts, getWorkout, deleteWorkout, updateWorkout } = require("../controllers/workoutController");
+const requrieAuth = require("../middleware/requireAuth");
+
+const router = express.Router(); //  the express.Router() function creates a new router object. A router in Express is a way to organize routes and their handlers in a separate module.
+// protecting routes
+router.use(requrieAuth);
 
 // GET all workouts
 router.get("/", getWorkouts);
