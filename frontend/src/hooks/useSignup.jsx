@@ -28,12 +28,12 @@ const useSignup = () => {
       setEmptyFields(json.emptyFields);
     }
     if (response.ok) {
-      // // saving the user to local storage
+      // saving the user to local storage
       // localStorage.setItem("user", JSON.stringify(json));
       const { token, refreshToken } = json;
-      setAccessToken(token);
-      document.cookie = `refreshToken=${refreshToken}; path=/; samesite=strict; httponly`;
-      dispatch({ type: "LOGIN", payload: json });
+      setAccessToken(token)
+      // document.cookie = `refreshToken=${refreshToken}; path=/; samesite=strict; httponly`;
+      dispatch({ type: "SIGNUP", payload: json });
       setIsLoading(false);
       setEmptyFields([]);
     }
