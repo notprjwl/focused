@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 // import useFetch from "../hooks/useFetch";
 
 const WorkoutForm = ({ closeModal }) => {
@@ -11,6 +12,7 @@ const WorkoutForm = ({ closeModal }) => {
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
   const [transition, setTransition] = useState(false);
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -36,12 +38,17 @@ const WorkoutForm = ({ closeModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!user) {
+      setError(" You must be logged in")
+      return
+    }
     const workout = { title, weight, sets, reps };
     const response = await fetch("/api/workouts", {
       method: "POST",
       body: JSON.stringify(workout),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
     const json = await response.json();
@@ -77,7 +84,7 @@ const WorkoutForm = ({ closeModal }) => {
           <form onSubmit={handleSubmit} className=''>
             <div className='p-2'>
               <label className='block font-sans font-medium text-sm text-white mb-1'>Exercise Title</label>
-              <input type='text' onChange={(e) => setTitle(e.target.value)} value={title} className='text-white text-sm  bg-formBg border border-border rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus'  />
+              <input type='text' onChange={(e) => setTitle(e.target.value)} value={title} className='text-white text-sm  bg-formBg border border-border rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus' />
             </div>
             <div className='p-2'>
               <label className='block font-sans font-medium text-sm text-white mb-1'>Weight (in kg)</label>
