@@ -13,5 +13,8 @@ router.post("/login", loginUser);
 // signup routes
 router.post("/signup", signupUser);
 
+// // logout route
+// router.post("/logout", logout)
+
 
 module.exports = router;
