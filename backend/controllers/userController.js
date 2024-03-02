@@ -3,11 +3,11 @@ const jwt = require("jsonwebtoken");
 
 // create token function
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" }); // 3 parameters
+  return jwt.sign({ _id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "3d" }); // 3 parameters
 };
 
 const createRefreshToken = (_id) => {
-  return jwt.sign({ _id }, process.env.REFRESH, { expiresIn: "10d" });
+  return jwt.sign({ _id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "10d" });
 };
 
 // login user
@@ -29,12 +29,10 @@ const loginUser = async (req, res) => {
 
   try {
     const user = await User.login(usernameOrEmail, password);
-
     //creating a token
     const token = createToken(user._id);
     const refreshToken = createRefreshToken(user._id);
-    res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 10 * 24 * 60 * 60 * 1000 });
-
+    // res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 10 * 24 * 60 * 60 * 1000 });
     res.status(200).json({ usernameOrEmail, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -66,11 +64,16 @@ const signupUser = async (req, res) => {
     //creating a token
     const token = createToken(user._id);
     const refreshToken = createRefreshToken(user._id);
-    res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 10 * 24 * 60 * 60 * 1000 });
-    res.status(200).json({ email, token,  refreshToken });
+    // res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 10 * 24 * 60 * 60 * 1000 });
+    res.status(200).json({ email, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
+// const logout = (req, res) => {
+//   res.clearCookie("refreshToken", { httpOnly: true, path: '/' });
+//   res.status(200).json({message: "Logout Successful", redirectTo: "/"})
+// }
 
 module.exports = { loginUser, signupUser };
