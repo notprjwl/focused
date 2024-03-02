@@ -3,9 +3,11 @@ import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import UpdateModal from "./UpdateModal";
 import { Funnel } from "@heroicons/react/outline";
 import useFetch from "../hooks/useFetch";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const WorkoutDetails = () => {
   const { workouts: initialWorkout, loading, error } = useFetch("/api/workouts");
+  const { user } = useAuthContext();
 
   // const newCreatedAt = workout.createdAt.slice(0, 10);
   const { dispatch } = useWorkoutsContext();
@@ -153,7 +155,12 @@ const WorkoutDetails = () => {
     setSelectedWorkouts(event.target.checked ? allWorkoutIds : []);
   };
 
+  //DELETE
   const handleDelete = async () => {
+    if (!user) {
+      // throw new Error('You must be logged in');
+      return;
+    }
     // Check if any workout is selected for deletion
     if (selectedWorkouts.length === 0) {
       // No workout selected, handle accordingly (show a message or do nothing)
@@ -166,6 +173,9 @@ const WorkoutDetails = () => {
     for (const workoutIdToDelete of workoutIdsToDelete) {
       const response = await fetch("api/workouts/" + workoutIdToDelete, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
       });
 
       const json = await response.json();
