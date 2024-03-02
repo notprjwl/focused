@@ -50,6 +50,7 @@ userSchema.statics.signup = async function (username, email, password) {
   if (usernameExists) {
     throw Error("username already in use");
   }
+
   if (emailExists) {
     throw Error("email already in use");
   }
