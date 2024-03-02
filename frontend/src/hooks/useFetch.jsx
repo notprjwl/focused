@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useWorkoutsContext } from "./useWorkoutsContext";
+import { useAuthContext } from "./useAuthContext";
 
 const useFetch = (url) => {
   const [loading, setLoading] = useState(true);
@@ -8,10 +9,16 @@ const useFetch = (url) => {
 
   const { workouts, dispatch } = useWorkoutsContext();
 
+  const { user } = useAuthContext();
+
   useEffect(() => {
     const fetchWorkouts = async () => {
       try {
-        const resp = await fetch(url);
+        const resp = await fetch(url, {
+          headers: {
+            "Authorization": `Bearer ${user.token}`,
+          },
+        });
         if (!resp.ok) {
           throw Error("error: cannot fetch the data");
         }
@@ -26,8 +33,10 @@ const useFetch = (url) => {
         setError(error.message);
       }
     };
-    fetchWorkouts();
-  }, [url]);
+    if (user) {
+      fetchWorkouts();
+    }
+  }, [url, user]);
 
   return { workouts, loading, error };
 };
