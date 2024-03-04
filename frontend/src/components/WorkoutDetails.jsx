@@ -51,7 +51,7 @@ const WorkoutDetails = () => {
   // };
 
   const handleSortToggle = (columnName) => {
-    console.log("clicked on column:", columnName);
+    // console.log("clicked on column:", columnName);
 
     setSortOrder((prevSortOrder) => {
       const newSortOrder = { ...prevSortOrder };
@@ -278,12 +278,12 @@ const WorkoutDetails = () => {
 
   return (
     <body className='p-2'>
-      <div className='text-textTint bg-background pt-2 sm:pt-5 mx-auto rounded-3xl border-[1px] border-text'>
+      <div className='text-textTint bg-[#1b1b1c] pt-2 sm:pt-5 mx-auto rounded-3xl border-[1px] border-[#37383c]'>
         <div className='items-center overflow-x-auto'>
           <div className='px-10 py-4 flex justify-between items-center text-center'>
-            <label className='input input-bordered flex items-center max-w-[25%] h-[40px] overflow-hidden hover:overflow-x px-3'>
-              <input type='text' className='grow sm:text-sm sm:placeholder:text-xs' placeholder='Search' onChange={handleSearchChange} />
-              <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 opacity-70'>
+            <label className='input input-bordered flex items-center max-w-[25%] h-[40px] overflow-hidden hover:overflow-x px-3 bg-[#1b1b1c]'>
+              <input type='text' className='grow sm:text-sm sm:placeholder:text-xs placeholder:text-[#a5a5a5] focus:border-0' placeholder='Search' onChange={handleSearchChange} />
+              <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 opacity-70 text-[#a5a5a5]'>
                 <path fillRule='evenodd' d='M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z' clipRule='evenodd' />
               </svg>
             </label>
@@ -381,7 +381,7 @@ const WorkoutDetails = () => {
             <tbody className={``}>
               {currentWorkouts && currentWorkouts.length > 0 ? (
                 currentWorkouts.map((workout) => (
-                  <tr key={workout._id} className='text-left border-t-[1px] border-text swipe-in transition-all duration-500 ease-in-out'>
+                  <tr key={workout._id} className='text-left border-t-[1px] border-[#37383c] swipe-in transition-all duration-500 ease-in-out'>
                     <td className='w-[1%] pl-3'>
                       <input
                         key={workout._id}
@@ -414,11 +414,11 @@ const WorkoutDetails = () => {
             </tbody>
           </table>
         </div>
-        <div className=' bg-[#393939] rounded-b-3xl px-3 p-2 sm:p-1 h-15 transition duration-500 ease-in-out'>
-          <div className='flex justify-end gap-10 items-center text-lg sm:text-xs md:text-2xl'>
+        <div className=' bg-[#2c2c2c] rounded-b-3xl px-3 sm:p-1 h-10 transition duration-500 ease-in-out'>
+          <div className='flex justify-end gap-10 items-center text-md sm:text-xs md:text-2xl'>
             <div>
-              <select name='' id='' className='btn btn-sm p-1 rounded-2xl bg-background' value={itemsPerPage} onChange={(e) => handleItemsPerPageChange(e.target.value)}>
-                <option value='5'>5</option>
+              <select name='' id='' className='btn btn-sm p-0 rounded-2xl bg-[#1b1b1c] focus:bg-black focus:outline-0  hover:bg-black transition-all duration-500 ease-in-out cursor-pointer' value={itemsPerPage} onChange={(e) => handleItemsPerPageChange(e.target.value)}>
+                <option value='5' className="bg-black">5</option>
                 <option value='10'>10</option>
                 <option value='20'>20</option>
                 <option value='25'>25</option>
@@ -428,13 +428,13 @@ const WorkoutDetails = () => {
               <h1 className='text-white font-sans'>{`${indexOfFirstItem + 1}-${Math.min(indexOfLastItem, totalWorkouts)} of ${totalWorkouts}`}</h1>
             </div>
             <div className='join p-1 '>
-              <button className='join-item btn btn-sm sm:btn-xs md:btn-xs lg:btn-sm rounded-2xl bg-background transition duration-500 ease-in-out border-0 ' onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+              <button className='join-item btn btn-sm sm:btn-xs md:btn-xs lg:btn-sm rounded-2xl bg-[#2c2c2c] disabled:bg-[#2c2c2c]  transition duration-500 ease-in-out border-0 ' onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
                 <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
                   <path strokeLinecap='round' strokeLinejoin='round' d='M15.75 19.5 8.25 12l7.5-7.5' />
                 </svg>
               </button>
               {/* <button className='join-item btn-sm  bg-background '>Page 22</button> */}
-              <button className='join-item btn btn-sm sm:btn-xs md:btn-xs lg:btn-sm rounded-2xl bg-background transition duration-500 ease-in-out border-0' onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+              <button className='join-item btn btn-sm sm:btn-xs md:btn-xs lg:btn-sm rounded-2xl bg-background transition duration-500 ease-in-out border-0 disabled:bg-[#2c2c2c]' onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
                 <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
                   <path strokeLinecap='round' strokeLinejoin='round' d='m8.25 4.5 7.5 7.5-7.5 7.5' />
                 </svg>
