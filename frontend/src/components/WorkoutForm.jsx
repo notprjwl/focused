@@ -64,7 +64,6 @@ const WorkoutForm = ({ closeModal }) => {
       setError(null);
       setEmptyFields([]);
       handleClose();
-      console.log("new workout added:", json);
       dispatch({ type: "CREATE_WORKOUT", payload: json });
     }
   };
