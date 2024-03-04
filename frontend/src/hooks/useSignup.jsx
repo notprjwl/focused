@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useAuthContext } from "./useAuthContext";
+import { useNavigate } from "react-router-dom";
+import { useAuthContext  } from "./useAuthContext";
 import SignUp from "../pages/SignUp";
 
 const useSignup = () => {
@@ -8,6 +9,7 @@ const useSignup = () => {
   const { dispatch } = useAuthContext();
   const [emptyFields, setEmptyFields] = useState([]);
   const [accessToken, setAccessToken] = useState(null);
+  const navigate = useNavigate();
 
   const signup = async (username, email, password) => {
     setIsLoading(true);
@@ -21,7 +23,7 @@ const useSignup = () => {
     });
 
     const json = await response.json();
-    console.log("json response: ", json);
+
     if (!response.ok) {
       setIsLoading(false);
       setError(json.error);
@@ -36,6 +38,7 @@ const useSignup = () => {
       dispatch({ type: "SIGNUP", payload: json });
       setIsLoading(false);
       setEmptyFields([]);
+      navigate('/login')
     }
   };
 
