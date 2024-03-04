@@ -23,12 +23,12 @@ const Login = () => {
   };
 
   const handleEmailSubmit = async (email) => {
-    console.log("email:", usernameOrEmail);
+    // console.log("email:", usernameOrEmail);
     await login(email, password);
   };
 
   const handleUsernameSubmit = async (username) => {
-    console.log("username: ", usernameOrEmail);
+    // console.log("username: ", usernameOrEmail);
     await login(username, password);
   };
 
