@@ -33,9 +33,9 @@ const loginUser = async (req, res) => {
     const token = createToken(user._id);
     const refreshToken = createRefreshToken(user._id);
     // res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 10 * 24 * 60 * 60 * 1000 });
-    res.status(200).json({ usernameOrEmail, token });
+     res.status(200).json({ usernameOrEmail, token, username: user.username, email: user.email });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+     res.status(400).json({ error: error.message });
   }
 };
 
