@@ -10,6 +10,11 @@
     {
       "src": "/(.*)",
       "dest": "/"
+    },
+    {
+      "src": "/api/user/signup",
+      "dest": "https://focused-server.vercel.app/api/user/signup",
+      "methods": ["POST"]
     }
   ]
 }
