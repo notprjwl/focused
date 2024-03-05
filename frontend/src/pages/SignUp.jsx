@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, Navigate  } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import { useSignup } from "../hooks/useSignup";
 
 const SignUp = () => {
@@ -9,8 +9,8 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const { signup, error, isLoading, emptyFields } = useSignup();
   const [showPassword, setShowPassword] = useState(false);
-
-
+  
+  const navigate = useNavigate()
 
   useEffect(() => {
     const timeOut = setTimeout(() => {

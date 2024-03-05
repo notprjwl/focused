@@ -21,7 +21,6 @@ const useLogin = () => {
     });
 
     const json = await response.json();
-    console.log("json response: ", json);
     if (!response.ok) {
       setIsLoading(false);
       setError(json.error);

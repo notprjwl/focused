@@ -8,7 +8,7 @@ const authReducer = (state, action) => {
       return { user: action.payload,  actionType: "LOGIN" };
 
     case "SIGNUP":
-      return { user: action.payload, actionType: "SIGNUP"};
+      return { user: null, actionType: "SIGNUP"};
 
     case "LOGOUT":
       return { user: null, actionType: null };
@@ -28,7 +28,7 @@ const AuthContextProvider = ({ children }) => {
   });
 
 
-  console.log("Auth context state: ", state);
+  // console.log("Auth context state: ", state);
 
   return <AuthContext.Provider value={{ ...state, dispatch }}>{children}</AuthContext.Provider>;
 };

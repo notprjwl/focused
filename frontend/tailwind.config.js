@@ -54,6 +54,7 @@ module.exports = {
         borderFocus: "#3a645d86",
         textTint: "#dfe0df",
         errorField: "#aa040d",
+        borderTable: "#37383c",
       }
       // backgroundImage: {
       //   "home-illustration": "url('/src/assets/home-illustration.png')",

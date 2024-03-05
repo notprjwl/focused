@@ -9,7 +9,6 @@ const Main = () => {
   const [modal, setModal] = useState(false);
 
   const modalOpen = () => {
-    console.log("modal is open");
     setModal(true);
   };
   const modalClose = () => {

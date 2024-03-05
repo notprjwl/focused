@@ -32,15 +32,15 @@ const Navbar = () => {
             <h1>Charts</h1>
           </Link> */}
           
-            <Link to='/workouts' className='animate-none hover:animate-spin transition ease-in-out'>
+            {/* <Link to='/workouts' className='animate-none hover:animate-spin transition ease-in-out'>
               <svg className='h-6 w-6 text-text' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.4' strokeLinecap='round' strokeLinejoin='round'>
                 <circle cx='12' cy='12' r='10' /> <line x1='12' y1='8' x2='12' y2='16' /> <line x1='8' y1='12' x2='16' y2='12' />
               </svg>
-            </Link>
+            </Link> */}
           
           {user && (
             <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="mr-3">{user.usernameOrEmail}</div>
+            <div tabIndex={0} role="button" className="mr-3">{user.username}</div>
             <ul tabIndex={0} className="dropdown-content z-[1] menu shadow bg-formBg mt-2 rounded-md w-25 hover:bg-black">
               <li onClick={handleLogout} className=""><a className="p-1 rounded-sm hover:bg-black">Logout</a></li>
             </ul>
