@@ -16,9 +16,6 @@ app.use((req, res, next) => {
   next(); //the next function passes the control to the next middleware in the stack. if you dont call next the req, res will be halted at this middleware and next ones wont be excecuted
 });
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
 
 // routes
 app.use("/api/workouts", workoutRoutes);
