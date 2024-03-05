@@ -4,9 +4,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const workoutRoutes = require("./routes/workouts");
 const userRoutes = require("./routes/user");
+const cors = require('cors');
 
 // express app
 const app = express();
+
+app.use(cors());
+
 
 // middleware
 app.use(express.json()); //This is particularly useful for handling POST or PUT requests where the client sends JSON data in the request body. The express.json() middleware ensures that you can easily access and work with that JSON data in your route handlers ie workoutRoutes
