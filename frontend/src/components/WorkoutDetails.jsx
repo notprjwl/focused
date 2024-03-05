@@ -418,7 +418,9 @@ const WorkoutDetails = () => {
           <div className='flex justify-end gap-10 items-center text-md sm:text-xs md:text-2xl'>
             <div>
               <select name='' id='' className='btn btn-sm p-0 rounded-2xl bg-[#1b1b1c] focus:bg-black focus:outline-0  hover:bg-black transition-all duration-500 ease-in-out cursor-pointer' value={itemsPerPage} onChange={(e) => handleItemsPerPageChange(e.target.value)}>
-                <option value='5' className="bg-black">5</option>
+                <option value='5' className='bg-black'>
+                  5
+                </option>
                 <option value='10'>10</option>
                 <option value='20'>20</option>
                 <option value='25'>25</option>
