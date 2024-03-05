@@ -6,7 +6,7 @@
     },
     {
       "context": "/vercel",
-      "target": "https://focused-server.vercel.app/"
+      "target": "https://focused-server.vercel.app"
     }
   ],
   
