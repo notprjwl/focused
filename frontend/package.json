@@ -1,15 +1,5 @@
 {
-  "proxy": [
-    {
-      "context": "/local",
-      "target": "http://localhost:4000"
-    },
-    {
-      "context": "/vercel",
-      "target": "https://focused-server.vercel.app"
-    }
-  ],
-  
+  "proxy": "https://focused-server.vercel.app",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
