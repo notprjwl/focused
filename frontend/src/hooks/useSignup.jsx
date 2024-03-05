@@ -11,10 +11,12 @@ const useSignup = () => {
   const [accessToken, setAccessToken] = useState(null);
   const navigate = useNavigate();
 
+  const BASE_URL = process.env.SERVER_API;
+
   const signup = async (username, email, password) => {
     setIsLoading(true);
     setError(null);
-    const response = await fetch("https://focused-server.vercel.app/api/user/signup", {
+    const response = await fetch(`${BASE_URL}/api/user/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
