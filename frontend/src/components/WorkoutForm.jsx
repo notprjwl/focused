@@ -42,7 +42,7 @@ const WorkoutForm = ({ closeModal }) => {
       setError(" You must be logged in");
       return;
     }
-    const BASE_URL = process.env.SERVER_API;
+    const BASE_URL = process.env.REACT_APP_SERVER_API;
     const workout = { title, weight, sets, reps };
     const response = await fetch(`${BASE_URL}/api/workouts`, {
       method: "POST",
