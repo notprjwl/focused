@@ -331,7 +331,7 @@ const WorkoutDetails = () => {
             <thead className='border-b-[1px] border-text'>
               <tr className='justify-start'>
                 <th>
-                  <input key={initialWorkout._id} type='checkbox' className='checkbox text-center align-middle ml-2' onChange={handleSelectAllChange} checked={filteredWorkouts && intialWorkout && initialWorkout.length > 0 ? selectedWorkouts.length === initialWorkout.length : false} />
+                  <input key={initialWorkout._id} type='checkbox' className='checkbox text-center align-middle ml-2' onChange={handleSelectAllChange} checked={filteredWorkouts && initialWorkout && initialWorkout.length > 0 ? selectedWorkouts.length === initialWorkout.length : false} />
                 </th>
                 <th className='px-2 py-2 sm:px-3 w-[30%] text-lg sm:text-xs md:text-2xl whitespace-nowrap text-wrap'>
                   <div className='flex items-center group text-lg sm:text-xs md:text-2xl whitespace-nowrap text-wrap'>
