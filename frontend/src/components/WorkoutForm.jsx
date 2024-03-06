@@ -38,10 +38,11 @@ const WorkoutForm = ({ closeModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!user) {
-      setError(" You must be logged in")
-      return
+    if (!user) {
+      setError(" You must be logged in");
+      return;
     }
+    const BASE_URL = process.env.SERVER_API;
     const workout = { title, weight, sets, reps };
     const response = await fetch(`${BASE_URL}/api/workouts`, {
       method: "POST",
