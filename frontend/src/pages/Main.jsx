@@ -28,7 +28,7 @@ const Main = () => {
       )}
       {!loading && (
         <div className='grid place-items-center'>
-          <button className='btn btm-sm bg-[#19191aa8] text-gray-300 hover:bg-green-800 hover:text-white hover:border border-[#3a645d86] ' onClick={modalOpen}>
+          <button className='btn btm-sm bg-[#19191aa8] text-gray-300 hover:bg-green-800 hover:text-white hover:border border-[#37383c] ' onClick={modalOpen}>
             Add an Exercise
           </button>
         </div>

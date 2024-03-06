@@ -296,20 +296,20 @@ const WorkoutDetails = () => {
             {selectedWorkouts.length === 0 ? <h1 className='justify-center text-2xl sm:text-sm md:text-sm lg:text-lg font-bold xxl:mr-[10px] max-w-[25%] transition-all duration-200 ease-in-out'>EXERCISE LOG</h1> : <h1 className='justify-center sm:text-sm md:text-sm lg:text-lg font-bold xxl:mr-[10px] w-[25%] transition-all duration-800 ease-in-out'>{`${selectedWorkouts.length} selected`}</h1>}
             {showFilter && (
               <div className='flex justify-end min-w-[25%]'>
-                <div className='dropdown dropdown-bottom dropdown-end h-10 justify-center text-lg sm:text-xs md:text-2xl'>
-                  <div tabIndex={0} role='button' className='btn-sm sm:btn-sm bg-transparent transition-all duration-300 ease-in-out mt-2'>
+                <div className='h-10 justify-center text-lg sm:text-xs md:text-2xl outline-none '>
+                  <div tabIndex={0} role='button' className=' bg-transparent transition-all duration-300 ease-in-out mt-2'>
                     <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6 transition-all duration-300 ease-in-out'>
                       <path strokeLinecap='round' strokeLinejoin='round' d='M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z' />
                     </svg>
                   </div>
-                  <ul tabIndex={0} className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-[7rem]'>
+                  {/* <ul tabIndex={0} className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-[7rem]'>
                     <li>
                       <a>By Date</a>
                     </li>
                     <li>
                       <a>By Reps</a>
                     </li>
-                  </ul>
+                  </ul> */}
                 </div>
               </div>
             )}

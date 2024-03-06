@@ -6,7 +6,7 @@ const Login = () => {
   const [transition, setTransition] = useState(false);
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, error, isLoading } = useLogin();
+  const { login, error, isLoading, emptyFields } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -34,8 +34,8 @@ const Login = () => {
 
   return (
     <body className='mx-5'>
-      <div className={`flex justify-center h-[90ch] items-center transition-all duration-1000 ease-in-out transform ${transition ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
-        <div className='bg-formBg p-5 mx-auto w-[23rem] h-[50%] shadow-xl rounded-xl'>
+      <div className={`flex justify-center h-[80vh] sm:h-[60vh] items-center transition-all duration-1000 ease-in-out transform ${transition ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
+        <div className={`bg-formBg p-5 mx-auto w-[23rem] h-[24rem] shadow-xl rounded-xl ${error ? 'h-[25.5rem]' : 'h-[24rem]'} transition-all duration-400 ease-in-out transform`}>
           <div className='font-sans text-white text-center mb-7'>
             <h1 className='font-sans font-bold text-[20px]'>Login to your account</h1>
             <span className='font-sans text-[16px]'>to continue</span>
@@ -45,14 +45,14 @@ const Login = () => {
               <label htmlFor='email' className='block font-sans font-medium text-sm text-white mb-1'>
                 Username or Email address
               </label>
-              <input type='text' className='text-white text-sm  bg-formBg border border-border rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus' value={usernameOrEmail} onChange={(e) => setUsernameOrEmail(e.target.value)} />
+              <input type='text' className={`text-white text-sm  bg-formBg border border-border rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus ${error && typeof error === "string" && ((error.includes("Please provide either username or email") || (error.includes("Invalid login credentials"))) || emptyFields?.includes("usernameOrEmail")) ? "border-errorField" : ""} `} value={usernameOrEmail} onChange={(e) => setUsernameOrEmail(e.target.value)} />
             </div>
             <div className='p-2'>
               <label htmlFor='password' className='block font-sans font-medium text-sm text-white mb-1'>
                 Password
               </label>
               <div className='relative'>
-                <input type={showPassword ? "text" : "password"} className='text-white text-sm bg-formBg border border-border rounded-md w-full px-[16px] py-[10px] pr-[30px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus' value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input type={showPassword ? "text" : "password"} className={`text-white text-sm bg-formBg border border-border rounded-md w-full px-[16px] py-[10px] pr-[30px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus ${error && typeof error === "string" && ((error.includes("Password is required")||(error.includes("Invalid login credentials"))) || emptyFields?.includes("password")) ? "border-errorField" : ""}`} value={password} onChange={(e) => setPassword(e.target.value)} />
                 <div className='absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer transition-all duration-500 ease-in-out' onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? (
                     <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-4 h-4 transition-all duration-500 ease-in-out'>

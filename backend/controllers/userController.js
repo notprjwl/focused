@@ -14,17 +14,17 @@ const createRefreshToken = (_id) => {
 const loginUser = async (req, res) => {
   const { usernameOrEmail, password } = req.body;
 
-  // let emptyFields = [];
+  let emptyFields = [];
 
-  // if (!(username || email)) {
-  //   emptyFields.push("usernameOrEmail");
-  // }
+  if (!usernameOrEmail) {
+    emptyFields.push("usernameOrEmail");
+  }
 
-  // if (!password) {
-  //   emptyFields.push("password");
-  // }
+  if (!password) {
+    emptyFields.push("password");
+  }
   // if (emptyFields.length > 0) {
-  //   return res.status(400).json({ error: "Please fill in all the field!" });
+  //   return res.status(400).json({ error: "Please fill in all the fields!", emptyFields });
   // }
 
   try {
@@ -33,9 +33,9 @@ const loginUser = async (req, res) => {
     const token = createToken(user._id);
     const refreshToken = createRefreshToken(user._id);
     // res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 10 * 24 * 60 * 60 * 1000 });
-     res.status(200).json({ usernameOrEmail, token, username: user.username, email: user.email });
+    res.status(200).json({ usernameOrEmail, token, username: user.username, email: user.email });
   } catch (error) {
-     res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 

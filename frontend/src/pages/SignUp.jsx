@@ -26,7 +26,7 @@ const SignUp = () => {
 
   return (
     <body className='mx-5'>
-      <div className={`flex justify-center h-[90vh] items-center transition-all duration-1000 ease-in-out transform ${transition ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
+      <div className={`flex justify-center h-[90vh] sm:h-[70vh] items-center transition-all duration-1000 ease-in-out transform ${transition ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
         <div className={`bg-formBg p-5 mx-auto w-[23rem] h-[29rem] transition-all duration-400 ease-in-out transform ${error ? 'h-[31rem]' : 'h-[29rem]'} shadow-xl rounded-xl`}>
           <div className='font-sans text-white text-center mb-7'>
             <h1 className='font-sans font-bold text-[20px]'>Create your account</h1>
