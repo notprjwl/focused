@@ -457,6 +457,7 @@ const WorkoutDetails = () => {
             </div>
           </div>
         </div>
+        {error && <div className='text-center text-text text-wrap bg-background font-mono mt-10 p-5 rounded-md'>{error}</div>}
       </div>
       {modal && workout && (
         <UpdateModal
