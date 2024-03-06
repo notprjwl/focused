@@ -100,6 +100,9 @@ const WorkoutDetails = () => {
   // }, [sortOrder, workout]);
 
   useEffect(() => {
+    if (!sortOrder || typeof sortOrder !== 'object') {
+      return; // Exit early if sortOrder is not an object
+    }
     const prevSortOrder = { ...sortOrder };
     const sortedWorkout = [...initialWorkout].sort((a, b) => {
       let comparison = 0;
