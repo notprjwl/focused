@@ -35,7 +35,8 @@ const UpdateModal = ({ closeModal, initialValues }) => {
     };
     // console.log(initialValues._id);
     // console.log("updatedWorkout:", updatedWorkout);
-    const response = await fetch("api/workouts/" + initialValues._id, {
+    const BASE_URL = process.env.SERVER_API;
+    const response = await fetch(`${BASE_URL}/api/workouts/` + initialValues._id, {
       method: "PATCH",
       body: JSON.stringify(updatedWorkout),
       headers: {

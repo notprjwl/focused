@@ -6,7 +6,8 @@ import useFetch from "../hooks/useFetch";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const WorkoutDetails = () => {
-  const { workouts: initialWorkout, loading, error } = useFetch("/api/workouts");
+  const BASE_URL = process.env.SERVER_API;
+  const { workouts: initialWorkout, loading, error } = useFetch(`${BASE_URL}/api/workouts`);
   const { user } = useAuthContext();
 
   // const newCreatedAt = workout.createdAt.slice(0, 10);
@@ -171,7 +172,9 @@ const WorkoutDetails = () => {
 
     // Loop through the selected workout IDs and delete each one
     for (const workoutIdToDelete of workoutIdsToDelete) {
-      const response = await fetch("api/workouts/" + workoutIdToDelete, {
+      const BASE_URL = process.env.SERVER_API;
+
+      const response = await fetch(`${BASE_URL}/api/workouts/` + workoutIdToDelete, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${user.token}`,

@@ -43,7 +43,7 @@ const WorkoutForm = ({ closeModal }) => {
       return
     }
     const workout = { title, weight, sets, reps };
-    const response = await fetch("/api/workouts", {
+    const response = await fetch(`${BASE_URL}/api/workouts`, {
       method: "POST",
       body: JSON.stringify(workout),
       headers: {
