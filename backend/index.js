@@ -10,11 +10,12 @@ const cors = require("cors")
 const app = express();
 
 app.use(cors({
-  origin: 'https://focused-server.vercel.app',
+  origin: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
 }));
+
 
 app.options('/api/user/signup', cors());
 
