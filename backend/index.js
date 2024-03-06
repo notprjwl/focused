@@ -10,7 +10,7 @@ const cors = require("cors")
 const app = express();
 
 app.use(cors({
-  origin: true,
+  origin: 'https://project-focused.vercel.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
