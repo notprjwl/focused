@@ -43,8 +43,10 @@ const WorkoutForm = ({ closeModal }) => {
       return;
     }
     const BASE_URL = process.env.REACT_APP_SERVER_API;
+    const apiUrl = BASE_URL ? BASE_URL : "http://localhost:3000";
+
     const workout = { title, weight, sets, reps };
-    const response = await fetch(`${BASE_URL}/api/workouts`, {
+    const response = await fetch(`${apiUrl}/api/workouts`, {
       method: "POST",
       body: JSON.stringify(workout),
       headers: {

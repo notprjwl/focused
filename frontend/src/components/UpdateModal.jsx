@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const UpdateModal = ({ closeModal, initialValues }) => {
   const [updatedTitle, setUpdatedTitle] = useState(initialValues.title);
@@ -11,6 +12,8 @@ const UpdateModal = ({ closeModal, initialValues }) => {
   const [transition, setTransition] = useState(false);
 
   const { dispatch } = useWorkoutsContext();
+
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -36,11 +39,13 @@ const UpdateModal = ({ closeModal, initialValues }) => {
     // console.log(initialValues._id);
     // console.log("updatedWorkout:", updatedWorkout);
     const BASE_URL = process.env.REACT_APP_SERVER_API;
-    const response = await fetch(`${BASE_URL}/api/workouts/` + initialValues._id, {
+    const apiUrl = BASE_URL ? BASE_URL : "http://localhost:3000";
+    const response = await fetch(`${apiUrl}/api/workouts/` + initialValues._id, {
       method: "PATCH",
       body: JSON.stringify(updatedWorkout),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
     const json = await response.json();
