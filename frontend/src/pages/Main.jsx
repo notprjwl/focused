@@ -4,8 +4,9 @@ import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
 
 const Main = () => {
-  const { workouts, loading, error } = useFetch("/api/workouts");
-
+  const BASE_URL = process.env.REACT_APP_SERVER_API;
+  const apiUrl = BASE_URL ? BASE_URL : 'http://localhost:3000';
+  const { workouts, loading, error } = useFetch(`${apiUrl}/api/workouts`);
   const [modal, setModal] = useState(false);
 
   const modalOpen = () => {
