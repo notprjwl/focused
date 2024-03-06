@@ -4,10 +4,19 @@ const express = require("express");
 const mongoose = require("mongoose");
 const workoutRoutes = require("./routes/workouts");
 const userRoutes = require("./routes/user");
-
+const cors = require("cors")
 
 // express app
 const app = express();
+
+app.use(cors({
+  origin: 'https://focused-server.vercel.app',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+}));
+
+app.options('/api/user/signup', cors());
 
 
 
