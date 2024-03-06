@@ -10,10 +10,10 @@ const useLogin = () => {
   const [accessToken, setAccessToken] = useState(null);
 
   const login = async (usernameOrEmail, password) => {
-  const BASE_URL = process.env.SERVER_API;
+  const BASE_URL = process.env.REACT_APP_SERVER_API;
     setIsLoading(true);
     setError(null);
-    const response = await fetch(`${process.env.REACT_APP_SERVER_API}/api/user/login`, {
+    const response = await fetch(`${BASE_URL}/api/user/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
