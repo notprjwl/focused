@@ -12,11 +12,12 @@ const useSignup = () => {
   const navigate = useNavigate();
 
   const BASE_URL = process.env.REACT_APP_SERVER_API;
+  const apiUrl = BASE_URL ? BASE_URL : 'http://localhost:3000';
 
   const signup = async (username, email, password) => {
     setIsLoading(true);
     setError(null);
-    const response = await fetch(`${BASE_URL}/api/user/signup`, {
+    const response = await fetch(`${apiUrl}/api/user/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
