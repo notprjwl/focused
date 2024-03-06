@@ -19,13 +19,13 @@ app.use((req, res, next) => {
   next(); //the next function passes the control to the next middleware in the stack. if you dont call next the req, res will be halted at this middleware and next ones wont be excecuted
 });
 
-
 // routes
 app.use("/api/workouts", workoutRoutes);
-app.use("/api/user", userRoutes)
+app.use("/api/user", userRoutes);
 
 // connect to db
-mongoose.connect(process.env.MONG_URI)
+mongoose
+  .connect(process.env.MONG_URI)
   .then(() => {
     const port = process.env.PORT || 4000;
     app.listen(port, () => {
@@ -35,5 +35,3 @@ mongoose.connect(process.env.MONG_URI)
   .catch((error) => {
     console.log(error);
   });
-
-
