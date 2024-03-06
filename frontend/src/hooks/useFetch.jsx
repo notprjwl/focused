@@ -16,7 +16,8 @@ const useFetch = (url) => {
       try {
         const resp = await fetch(url, {
           headers: {
-            "Authorization": `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
           },
         });
         if (!resp.ok) {
