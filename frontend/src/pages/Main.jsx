@@ -28,7 +28,7 @@ const Main = () => {
       )}
       {!loading && (
         <div className='grid place-items-center'>
-          <button className='btn btm-sm bg-[#19191aa8] text-gray-300 hover:bg-green-800 hover:text-white hover:border border-[#37383c] ' onClick={modalOpen}>
+          <button className='btn btm-sm bg-[#19191aa8] text-gray-300 hover:bg-green-800 hover:text-white hover:border border-[#37383c] sm:btn-xs sm:h-8 transition-all duration-500 ease-in-out' onClick={modalOpen}>
             Add an Exercise
           </button>
         </div>
@@ -46,7 +46,7 @@ const Main = () => {
         </div>
       )}
 
-      {error && <div className='text-center text-text text-wrap bg-background font-mono mt-10 p-5 rounded-md'>{error}</div>}
+      {error && <div className='text-center text-errorField text-wrap bg-background font-mono mt-10 p-5 rounded-md'>{error}</div>}
     </div>
   );
 };
