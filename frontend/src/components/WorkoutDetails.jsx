@@ -287,7 +287,7 @@ const WorkoutDetails = () => {
       <div className='text-textTint bg-[#1b1b1c] pt-2 sm:pt-5 mx-auto rounded-3xl border-[1px] border-[#37383c]'>
         <div className='items-center overflow-x-auto'>
           <div className='px-10 py-4 flex justify-between items-center text-center'>
-            <label className='input input-bordered flex items-center max-w-[25%] h-[40px] overflow-hidden hover:overflow-x px-3 bg-[#1b1b1c]'>
+            <label className='input input-bordered flex items-center max-w-[25%] h-[40px] sm:h-[30px] overflow-hidden hover:overflow-x px-3 bg-[#1b1b1c]'>
               <input type='text' className='grow sm:text-sm sm:placeholder:text-xs placeholder:text-[#a5a5a5] focus:border-0' placeholder='Search' onChange={handleSearchChange} />
               <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' className='w-4 h-4 opacity-70 text-[#a5a5a5]'>
                 <path fillRule='evenodd' d='M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z' clipRule='evenodd' />
@@ -443,7 +443,7 @@ const WorkoutDetails = () => {
               <h1 className='text-white font-sans'>{`${indexOfFirstItem + 1}-${Math.min(indexOfLastItem, totalWorkouts)} of ${totalWorkouts}`}</h1>
             </div>
             <div className='join p-1 '>
-              <button className='join-item btn btn-sm sm:btn-xs md:btn-xs lg:btn-sm rounded-2xl bg-[#2c2c2c] disabled:bg-[#2c2c2c]  transition duration-500 ease-in-out border-0 ' onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+              <button className='join-item btn btn-sm sm:btn-xs md:btn-xs lg:btn-sm rounded-2xl bg-background transition duration-500 ease-in-out border-0 disabled:bg-[#2c2c2c] ' onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
                 <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
                   <path strokeLinecap='round' strokeLinejoin='round' d='M15.75 19.5 8.25 12l7.5-7.5' />
                 </svg>
