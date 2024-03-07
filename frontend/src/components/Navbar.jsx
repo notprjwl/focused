@@ -59,7 +59,7 @@ const Navbar = () => {
               </ul>
             </div>
           )} */}
-          <li class='group relative dropdown px-2 text-1xl sm:text-[1rem] text-text tracking-tight'>
+          {user && (<li class='group relative dropdown px-2 text-1xl sm:text-[1rem] text-text tracking-tight'>
             <a>
               {user.username}
             </a>
@@ -80,7 +80,7 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
-          </li>
+          </li> )}
         </div>
       </div>
     </header>
