@@ -84,7 +84,7 @@ const UpdateModal = ({ closeModal, initialValues }) => {
             </div>
             <div className='p-2'>
               <label className='block font-sans font-medium text-sm text-white mb-1'>Weight (in kg)</label>
-              <input type='number' min='0' onChange={(e) => setUpdatedWeight(e.target.value)} value={updatedWeight} className='text-white text-sm  bg-formBg border border-border rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus' />
+              <input type='number' min='0' step="any" onChange={(e) => setUpdatedWeight(e.target.value)} value={updatedWeight} className='text-white text-sm  bg-formBg border border-border rounded-md w-full px-[16px] py-[10px] focus:border-transparent focus:outline-none focus:ring-1 focus:ring-borderFocus' />
             </div>
             <div className='p-2'>
               <label className='block font-sans font-medium text-sm text-white mb-1'>Sets</label>
