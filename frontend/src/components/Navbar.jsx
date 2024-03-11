@@ -63,7 +63,7 @@ const Navbar = () => {
             <a>
               {user.username}
             </a>
-            <div class='group-hover:block dropdown-menu absolute hidden right-0'>
+            <div class='group-hover:block absolute hidden right-0'>
             <ul className='z-[1] menu shadow bg-formBg mt-2 rounded-md w-25 p-0'>
                 <Link to='/dashboard'>
                   <li className=''>
