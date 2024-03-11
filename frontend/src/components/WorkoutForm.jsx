@@ -72,7 +72,7 @@ const WorkoutForm = ({ closeModal }) => {
   };
 
   return (
-    <div onClick={handleOverlayClick} className={`fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center transition-all duration-500 ${transition ? "translate-y-0 opacity-100" : "translate-y-[-8px] opacity-0"}`}>
+    <div onClick={handleOverlayClick} className={`fixed inset-0 z-50 overflow-auto bg-transparent bg-opacity-50 flex items-center justify-center transition-all duration-500 ${transition ? "translate-y-0 opacity-100" : "translate-y-[-8px] opacity-0"}`}>
       <div className={`flex justify-center h-[55vh] mt-10 items-center sm:w-[300px] transition-all duration-500 ease-in-out transform ${transition ? "translate-y-0 opacity-100" : "translate-y-[-8px] opacity-0"}`}>
         <div className='bg-formBg p-5 mx-auto w-[23rem] shadow-xl rounded-xl transition-all duration-500 ease-in-out'>
           <div className='flex font-sans text-white text-center mb-7 items-center justify-center transition-all duration-500 ease-in-out'>
