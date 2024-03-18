@@ -59,11 +59,11 @@ const Navbar = () => {
               </ul>
             </div>
           )} */}
-          {user && (<li class='group relative dropdown px-2 text-1xl sm:text-[1rem] text-text tracking-tight'>
+          {user && (<li class='group relative dropdown px-2 text-1xl sm:text-[1rem] text-text tracking-tight pointer-events-auto'>
             <a>
               {user.username}
             </a>
-            <div class='group-hover:block absolute hidden right-0'>
+            <div class='group-hover:block absolute hidden right-0 pointer-events-auto pl-2 z-10'>
             <ul className='z-[1] menu shadow bg-formBg mt-2 rounded-md w-25 p-0'>
                 <Link to='/dashboard'>
                   <li className=''>
