@@ -44,11 +44,11 @@ const Dashboard = () => {
         </div>
 
         <div class='w-80 relative mx-auto mt-[3rem] items-center justify-center text-center group sm:text-[1.3rem]'>
-          <h1 className={`text-white font-playfair text-4xl blur-[1px] group-hover:blur-0 transition-all duration-500 ease-in-out ${isAddWorkoutHovered ? "blur-none" : "blur-[1px]"} sm:text-[1.6rem]`}>
+          <h1 className={`text-white font-playfair text-4xl blur-[1px] group-hover:blur-0 transition-all duration-500 ease-in-out ${isAddWorkoutHovered ? "blur-none" : "blur-[1px]"} sm:text-[2rem]`}>
             Are you focu<span className={`'opacity-80 blur-[1px] group-hover:blur-none group-hover:opacity-100 transition-all duration-500 ease-in-out italic' ${isAddWorkoutHovered ? "blur-none italic" : "blur-[1px] italic opacity-90"}`}>sed,</span> <h1 className={`'opacity-40 absolute mx-auto sm:top-7 sm:bottom-[0.1rem] left-0 right-0 group-hover:opacity-100 transition-all duration-500 ease-in-out group-hover:blur-none group-hover: font-semibold text-md'${isAddWorkoutHovered ? "blur-none font-semibold" : "blur-[1px] opacity-20"}`}>{user.username}?</h1>
           </h1>
         </div>
-        <div className={`justify-center items-center mt-20 flex gap-5 mx-5 sm:flex-col sm:items-center sm:justify-center transition-all duration-500 ease-in-out transform ${transition ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
+        <div className={`justify-center items-center mt-20 sm:mt-13 flex gap-5 mx-5 sm:flex-col sm:items-center sm:justify-center transition-all duration-500 ease-in-out transform ${transition ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
           <div className='h-[20rem] w-[15rem] flex flex-col items-center justify-center bg-text rounded-xl cursor-pointer blur-[1px] hover:blur-0 sm:h-[10rem]' onMouseEnter={() => setIsAddWorkoutHovered(true)} onMouseLeave={() => setIsAddWorkoutHovered(false)} onClick={modalOpen}>
             {/* <img src='/dashboard-2.jpg' alt='da' className='h-full w-full object-cover sm:items-center sm:mx-auto rounded-xl blur-sm' /> */}
             <h1 className='text-background font-poppins font-semibold'>Add workout</h1>
