@@ -39,7 +39,7 @@ const Dashboard = () => {
   return (
     <div className=''>
       <div className={`justify-center items-center text-center transition-all duration-1000 ease-in-out transform ${transition ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
-        <div className='mt-[5rem] font-playfair text-2xl text-[#d0d0cf] italic mx-2 sm:text-[1.2rem] sm:mt-[6rem] text shadow-white ' style={{ textShadow: "1px 1px 4px rgba(255, 255, 255, 0.8)" }}>
+        <div className='mt-[5rem] font-playfair text-2xl text-[#d0d0cf] italic mx-2 sm:text-[1.2rem] sm:mt-[2rem] text shadow-white' style={{ textShadow: "1px 1px 4px rgba(255, 255, 255, 0.8)" }}>
           "{quote}"
         </div>
 
